@@ -3,9 +3,8 @@ import styled from "@emotion/styled";
 export const FooterWrap = styled.footer`
   position: fixed;
   bottom: 0;
-  left: 0;
   background: lightblue;
-  width: 100%;
+  width: 500px;
   height: 70px;
   line-height: 70px;
 `;

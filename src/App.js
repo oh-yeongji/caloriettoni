@@ -8,10 +8,7 @@ import MyPage from "./pages/MyPage";
 import NotFound from "./pages/NotFound";
 import Schedule from "./pages/Schedule";
 import List from "./pages/List";
-<<<<<<< HEAD
 import Footer from "./components/Footer";
-=======
->>>>>>> oh-yeongji
 
 function App() {
   return (
