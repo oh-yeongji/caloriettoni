@@ -1,20 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { IntroWrap } from "../style/IntroCss";
 
 const Intro = () => {
   return (
-    <div>
+    <IntroWrap>
       <Link to="/main">
-        <img
-          src="images/intro.jpg"
-          alt="intro"
-          style={{
-            width: "100%",
-            height: "900px",
-          }}
-        />
+        <img src="images/intro.jpg" alt="intro" />
       </Link>
-    </div>
+    </IntroWrap>
   );
 };
 
