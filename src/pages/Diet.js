@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { DietUpload, mealTime, Row, calorie } from "../style/DietCss";
+import { Total } from "../style/DietCss";
 
-import { PlusOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload, Radio, Select, Input, Button, Form } from "antd";
 const { TextArea } = Input;
+
 // 파일 미리보기
 const getBase64 = file =>
   new Promise((resolve, reject) => {
@@ -69,9 +70,10 @@ const Diet = () => {
   };
 
   return (
-    <div>
-      <div>주간달력</div>
-      <DietUpload>
+    <>
+      <Total>
+        <div>주간달력</div>
+
         <Form
           labelCol={{
             span: 4,
@@ -81,6 +83,14 @@ const Diet = () => {
           }}
           style={{
             maxWidth: 500,
+            //이거
+            // marginLeft: "50px",
+            // marginRight: "20px",
+            background: "#dcdcdc",
+            // display: "flex",
+            // flexWrap: "column",
+            // paddingLeft: "10px",
+            margin: "0 50px",
           }}
           form={form}
           layout="horizontal"
@@ -94,9 +104,20 @@ const Diet = () => {
             label="Upload"
             valuePropName="fileList"
             getValueFromEvent={normFile}
-            rules={[{ required: true }]}
-            name="d"
+            rules={[{ required: true, message: "이미지를 업로드 해주세요!" }]}
+            name="foodupload"
+            style={{
+              // padding: "20px 0px",
+              padding: "35px",
+
+              background: "#fff5ee",
+              border: "1.5px solid #e6e6fa",
+
+              // marginBottom: "45px",
+            }}
           >
+            {/* 식단 사진 업로드 */}
+
             <Upload
               action="/upload.do"
               listType="picture-card"
@@ -108,14 +129,10 @@ const Diet = () => {
             </Upload>
           </Form.Item>
 
-          <Modal
-            open={previewOpen}
-            title={previewTitle}
-            footer={null}
-            onCancel={handleCancel}
-          >
+          {/* 이미지 미리보기 창 */}
+          <Modal open={previewOpen} footer={null} onCancel={handleCancel}>
             <img
-              alt="example"
+              alt="previewimage"
               style={{
                 width: "100%",
               }}
@@ -123,10 +140,18 @@ const Diet = () => {
             />
           </Modal>
 
+          {/* 식사 시각 */}
+
           <Form.Item
-            label="식사시간"
+            label="식사시각"
             name="mealtime"
-            rules={[{ required: true }]}
+            rules={[{ required: true, message: "하나를 선택해주세요!" }]}
+            style={{
+              background: "#fff5ee",
+              padding: "20px",
+
+              border: "1.5px solid #e6e6fa",
+            }}
           >
             <Radio.Group>
               <Radio.Button value="blackfirst">아침</Radio.Button>
@@ -135,7 +160,19 @@ const Diet = () => {
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item label="식단선택" name="a" rules={[{ required: true }]}>
+          {/* 식단 선택 */}
+
+          <Form.Item
+            label="식단선택"
+            name="foodselect"
+            rules={[{ required: true, message: "식단을 선택해주세요!" }]}
+            style={{
+              background: "#fff5ee",
+              padding: "20px",
+
+              border: "1.5px solid #e6e6fa",
+            }}
+          >
             <Select
               options={[
                 {
@@ -157,23 +194,71 @@ const Diet = () => {
             ></Select>
           </Form.Item>
 
-          <Form.Item label="칼로리" name="calorie" rules={[{ required: true }]}>
-            <Input />
+          {/* 섭취칼로리 알림/입력 란 */}
+
+          <Form.Item
+            label="섭취칼로리"
+            name="intakecalorie"
+            rules={[
+              { required: true, message: "섭취한 칼로리를 입력해주세요!" },
+            ]}
+            style={{
+              background: "#fff5ee",
+              padding: "20px",
+              border: "1.5px solid #e6e6fa",
+              // paddingLeft: "100px",
+              overflow: "visible",
+            }}
+          >
+            <Input minLength={1} maxLength={5} />
           </Form.Item>
 
-          <Form.Item label="메모(option)" name="memo">
-            <TextArea rows={4} />
+          {/* 메모 입력 란 */}
+
+          <Form.Item
+            label="메모"
+            name="intakememo"
+            style={{
+              background: "#fff5ee",
+              padding: "20px",
+
+              border: "1.5px solid #e6e6fa",
+            }}
+          >
+            <TextArea
+              rows={6}
+              cols={30}
+              placeholder="오늘의 식단을 기록해보세요!(선택사항)"
+            />
           </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
+          {/* 저장/취소 버튼 */}
+
+          <Form.Item
+            style={{
+              padding: "20px",
+              marginBottom: "0px",
+              marginTop: "0px",
+              // position: "relative",
+            }}
+          >
+            <Button type="primary" htmlType="submit" style={{ top: "-10px" }}>
               Save
             </Button>
-            <Button>Cancel</Button>
+            <Button style={{ top: "-10px" }}>Cancel</Button>
           </Form.Item>
         </Form>
-      </DietUpload>
-    </div>
+      </Total>
+      <div
+        style={{
+          background: "#fff5ee",
+          // width: "500px",
+          // height: "300px",
+          // overflow: "hidden",
+          // position: "absolute",
+        }}
+      ></div>
+    </>
   );
 };
 
