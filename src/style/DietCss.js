@@ -23,13 +23,15 @@ export const Total = styled.div`
     border-radius: 5px;
   }
 
-  .css-5ivzz4 .ant-form-item .ant-form-item-label {
-    margin-left: "31px";
-  }
   .ant-form-item .ant-form-item-label {
     overflow: visible;
+    margin-left: "31px";
+    & > {
+      margin-left: 18px;
+    }
   }
-  .ant-form-item .ant-form-item-label > label {
+
+  /* .ant-form-item .ant-form-item-label > label {
     margin-left: 18px;
-  }
+  } */
 `;

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ResponsiveLine } from "@nivo/line";
 import { Total, Mypage, Graph, TodayUp, TodayDown } from "../style/MainCss";
 
 const Main = () => {
@@ -7,6 +8,7 @@ const Main = () => {
   const [gender, setGender] = useState("");
   const [height, setHeight] = useState("");
   const [wight, setwight] = useState("");
+
   return (
     <Total>
       <Mypage>

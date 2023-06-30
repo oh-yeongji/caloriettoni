@@ -80,14 +80,7 @@ const Health = () => {
   };
   return (
     <Total>
-      <div
-        style={{
-          // width: "50px",
-          height: "50px",
-        }}
-      >
-        주간달력
-      </div>
+      <div className="weekly">주간달력</div>
 
       <Form
         labelCol={{
@@ -117,7 +110,6 @@ const Health = () => {
           name="healthupload"
           style={{
             background: "rgb(13,133,254)",
-            // margin: "0 50px",
             border: "1.8px solid #e6e6fa",
             borderRadius: " 35px 35px  35px 6px",
             padding: "20px",
@@ -153,7 +145,6 @@ const Health = () => {
           rules={[{ required: true, message: "운동을 선택해주세요!" }]}
           style={{
             background: "	#dcdcdc",
-            // border: "1.8px solid #e6e6fa",
             borderRadius: " 35px 35px  6px 35px",
             padding: "20px",
           }}
@@ -184,7 +175,6 @@ const Health = () => {
           rules={[{ required: true, message: "운동한 시간을 선택해주세요!" }]}
           style={{
             background: "rgb(13,133,254)",
-            // border: "1.8px solid #e6e6fa",
             borderRadius: " 35px 35px  35px 6px",
             padding: "20px",
           }}
@@ -201,10 +191,9 @@ const Health = () => {
         <Form.Item
           label="소모칼로리"
           name="minuscalorie"
-          rules={[{ required: true, message: "소모한 칼로리를 입력해주세요!" }]}
+          rules={[{ required: true, message: "소모칼로리를 입력해주세요!" }]}
           style={{
             background: "	 #dcdcdc",
-            // border: "1.8px solid #e6e6fa",
             borderRadius: " 35px 35px  6px 35px",
             padding: "20px",
           }}
@@ -218,7 +207,6 @@ const Health = () => {
           name="memo"
           style={{
             background: "rgb(13,133,254)",
-            // border: "1.8px solid #e6e6fa",
             borderRadius: " 35px 35px  35px 6px",
             padding: "20px",
           }}
