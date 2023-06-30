@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
 
 export const ListWrap = styled.div`
-  padding-bottom: 70px;
+  padding-bottom: 61px;
+  border: 1px solid lightblue;
+  height: 100vh;
   h2 {
     display: flex;
     justify-content: center;
@@ -11,20 +13,21 @@ export const ListWrap = styled.div`
 `;
 
 export const ListDietWrap = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  width: 460px;
+  width: 500px;
   height: 150px;
   border: 1px solid lightblue;
   border-radius: 10px;
   margin-bottom: 10px;
   margin-top: 10px;
   padding-right: 5px;
+  word-break: inherit;
   > ul {
     margin: 0;
+    width: 340px;
     li {
-      div {
-      }
     }
   }
 `;
@@ -38,16 +41,20 @@ export const ListDietPic = styled.div`
 `;
 
 export const ListHealthWrap = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  width: 460px;
+  width: 480px;
   height: 150px;
   border: 1px solid lightblue;
   border-radius: 10px;
   margin-bottom: 10px;
   margin-top: 10px;
+  word-break: inherit;
+
   > ul {
     margin: 0;
+    width: 340px;
     li {
       div {
       }
@@ -64,12 +71,15 @@ export const ListHealthPic = styled.div`
 `;
 
 export const DeleteButton = styled.button`
+  position: absolute;
+  top: 10%;
+  right: 1%;
   width: 25px;
   height: 25px;
-  background: lightblue;
-  border: 1px solid lightblue;
+  background: white;
+  border: none;
   border-radius: 7px;
   font-size: 18px;
-  color: black;
+  color: lightblue;
   cursor: pointer;
 `;

@@ -6,6 +6,15 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Schedule = () => {
+  const marks = [
+    "15-06-2023",
+    "03-06-2023",
+    "07-06-2023",
+    "12-06-2023",
+    "13-06-2023",
+    "15-06-2023",
+  ];
+
   const [value, onChange] = useState(new Date());
 
   return (
@@ -24,6 +33,11 @@ const Schedule = () => {
         value={value}
         calendarType="US"
         formatDay={(locale, date) => moment(date).format("D")}
+        tileClassName={({ date, view }) => {
+          if (marks.find(x => x === moment(date).format("DD-MM-YYYY"))) {
+            return "highlight";
+          }
+        }}
       />
     </CalendarWrap>
   );

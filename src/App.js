@@ -12,8 +12,8 @@ import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div>
-      <Routes>    
+    <div className="wrap">
+      <Routes>
         <Route path="/" element={<Intro />}></Route>
         <Route path="/main" element={<Main />}></Route>
         <Route path="/diet" element={<Diet />}></Route>

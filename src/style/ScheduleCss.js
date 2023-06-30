@@ -80,10 +80,26 @@ export const CalendarMain = styled(Calendar)`
       font-size: 23px;
     }
   }
+  .react-calendar__navigation button:enabled:hover,
+  .react-calendar__navigation button:enabled:focus {
+    background-color: lightcoral;
+  }
   .react-calendar__tile:enabled:hover,
   .react-calendar__tile:enabled:focus {
-    background-color: ;
-    border-radius: ;
-    color: ;
+    background-color: lightblue;
+  }
+  .react-calendar__tile--now {
+    background: lightblue;
+  }
+  .highlight {
+    background: lightgreen;
+  }
+  .react-calendar__tile--active {
+    background: lightblue;
+    color: white;
+  }
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus {
+    background: lightblue;
   }
 `;

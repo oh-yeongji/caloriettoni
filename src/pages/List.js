@@ -20,31 +20,31 @@ const List = () => {
     const tempData = [
       {
         ifood: "인덱스",
-        iuser: "사용자",
+        iuser: "사용자1",
         idate: "날짜",
         food: "음식1",
-        pic: "사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진사진",
+        pic: "날 밀어 내지마라",
         cal: "칼로리",
-        memo: "유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감유감",
+        memo: "아자꾸 왜 안먹히는건지 이해를 할수가 없네 짜증나게 야 좀 먹혀봐라 왜 자꾸 글이 흐럴 넘치니",
       },
       {
         ifood: "인덱스",
-        iuser: "사용자",
+        iuser: "사용자2",
         idate: "날짜",
         food: "음식2",
         pic: "사진2",
         cal: "칼로리2",
         memo: "김수한무 두루미와 거북이 척박사123",
       },
-      {
-        ifood: "인덱스",
-        iuser: "사용자",
-        idate: "날짜",
-        food: "음식3",
-        pic: "사진3",
-        cal: "칼로리3",
-        memo: "김수한무 두루미와 거북박사ㄹ",
-      },
+      // {
+      //   ifood: "인덱스",
+      //   iuser: "사용자3",
+      //   idate: "날짜",
+      //   food: "음식3",
+      //   pic: "사진3",
+      //   cal: "칼로리3",
+      //   memo: "김수한무 두루미와 거북박사ㄹ",
+      // },
     ];
     setFoodList(tempData);
   }, []);
@@ -57,7 +57,7 @@ const List = () => {
     // axios 로 가져옮
     const tempData = [
       {
-        iuser: "사용자",
+        iuser: "사용자1",
         pic: "사진",
         ihel: "수영",
         time: "2시간",
@@ -65,24 +65,29 @@ const List = () => {
         memo: "유감유감유감유감유감유감유감유감유감유감유감",
       },
       {
-        iuser: "사용자",
+        iuser: "사용자2",
         pic: "사진3",
         ihel: "수영",
         time: "3시간",
         cal: "700칼로리",
         memo: "유감유감유감유감유감유감유감유감유감유감유감",
       },
-      {
-        iuser: "사용자",
-        pic: "사진3",
-        ihel: "수영",
-        time: "1시간",
-        cal: "600칼로리",
-        memo: "유감유감유감유감유감유감유감유감유감유감유감",
-      },
+      // {
+      //   iuser: "사용자3",
+      //   pic: "사진3",
+      //   ihel: "수영",
+      //   time: "1시간",
+      //   cal: "600칼로리",
+      //   memo: "유감유감유감유감유감유감유감유감유감유감유감",
+      // },
     ];
     setHealthList(tempData);
   }, []);
+
+  const handleDeleteList = _id => {
+    const newTodoData = healthList.filter(item => item.iuser !== _id);
+    setHealthList(newTodoData);
+  };
 
   return (
     <ListWrap>
@@ -129,7 +134,7 @@ const List = () => {
               </li>
             </ul>
 
-            <DeleteButton>
+            <DeleteButton onClick={handleDeleteList}>
               <FontAwesomeIcon icon={faTrashCan} />
             </DeleteButton>
           </ListHealthWrap>

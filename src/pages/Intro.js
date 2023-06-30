@@ -1,13 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IntroWrap } from "../style/IntroCss";
 
 const Intro = () => {
+  const navigate = useNavigate();
+
+  const handleNavi = () => {
+    navigate("/main");
+  };
   return (
-    <IntroWrap>
-      <Link to="/main">
-        <img src="images/intro.jpg" alt="intro" />
-      </Link>
+    <IntroWrap onClick={handleNavi}>
+      <div className="logo">
+        <img src="../images/logo.png"></img>
+      </div>
     </IntroWrap>
   );
 };
