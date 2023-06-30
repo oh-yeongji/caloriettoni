@@ -72,7 +72,7 @@ const Diet = () => {
   return (
     <>
       <Total>
-        <div>주간달력</div>
+        <div className="weekly">주간달력</div>
 
         <Form
           labelCol={{
@@ -83,13 +83,6 @@ const Diet = () => {
           }}
           style={{
             maxWidth: 500,
-            //이거
-            // marginLeft: "50px",
-            // marginRight: "20px",
-            background: "#dcdcdc",
-            // display: "flex",
-            // flexWrap: "column",
-            // paddingLeft: "10px",
             margin: "0 50px",
           }}
           form={form}
@@ -107,13 +100,9 @@ const Diet = () => {
             rules={[{ required: true, message: "이미지를 업로드 해주세요!" }]}
             name="foodupload"
             style={{
-              // padding: "20px 0px",
-              padding: "35px",
-
-              background: "#fff5ee",
-              border: "1.5px solid #e6e6fa",
-
-              // marginBottom: "45px",
+              background: "#dcdcdc",
+              borderRadius: " 35px 35px  35px 6px",
+              padding: "20px",
             }}
           >
             {/* 식단 사진 업로드 */}
@@ -143,14 +132,13 @@ const Diet = () => {
           {/* 식사 시각 */}
 
           <Form.Item
-            label="식사시각"
+            label="식사시각:"
             name="mealtime"
             rules={[{ required: true, message: "하나를 선택해주세요!" }]}
             style={{
-              background: "#fff5ee",
               padding: "20px",
-
-              border: "1.5px solid #e6e6fa",
+              background: " rgb(13,133,254)",
+              borderRadius: " 35px 35px  6px 35px",
             }}
           >
             <Radio.Group>
@@ -167,10 +155,10 @@ const Diet = () => {
             name="foodselect"
             rules={[{ required: true, message: "식단을 선택해주세요!" }]}
             style={{
-              background: "#fff5ee",
-              padding: "20px",
+              background: "#dcdcdc",
 
-              border: "1.5px solid #e6e6fa",
+              borderRadius: " 35px 35px  35px 6px",
+              padding: "20px",
             }}
           >
             <Select
@@ -203,11 +191,9 @@ const Diet = () => {
               { required: true, message: "섭취한 칼로리를 입력해주세요!" },
             ]}
             style={{
-              background: "#fff5ee",
               padding: "20px",
-              border: "1.5px solid #e6e6fa",
-              // paddingLeft: "100px",
-              overflow: "visible",
+              background: "rgb(13,133,254)",
+              borderRadius: " 35px 35px 6px 35px",
             }}
           >
             <Input minLength={1} maxLength={5} />
@@ -219,10 +205,10 @@ const Diet = () => {
             label="메모"
             name="intakememo"
             style={{
-              background: "#fff5ee",
               padding: "20px",
 
-              border: "1.5px solid #e6e6fa",
+              background: "#dcdcdc",
+              borderRadius: " 35px 35px  35px 6px",
             }}
           >
             <TextArea
@@ -237,9 +223,6 @@ const Diet = () => {
           <Form.Item
             style={{
               padding: "20px",
-              marginBottom: "0px",
-              marginTop: "0px",
-              // position: "relative",
             }}
           >
             <Button type="primary" htmlType="submit" style={{ top: "-10px" }}>
@@ -252,10 +235,6 @@ const Diet = () => {
       <div
         style={{
           background: "#fff5ee",
-          // width: "500px",
-          // height: "300px",
-          // overflow: "hidden",
-          // position: "absolute",
         }}
       ></div>
     </>

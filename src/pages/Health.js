@@ -80,7 +80,14 @@ const Health = () => {
   };
   return (
     <Total>
-      <div>주간달력</div>
+      <div
+        style={{
+          // width: "50px",
+          height: "50px",
+        }}
+      >
+        주간달력
+      </div>
 
       <Form
         labelCol={{
@@ -91,7 +98,7 @@ const Health = () => {
         }}
         style={{
           maxWidth: 500,
-          background: "	#dcdcdc",
+          // background: "	#dcdcdc",
           margin: "0 50px",
         }}
         form={form}
@@ -107,11 +114,13 @@ const Health = () => {
           valuePropName="fileList"
           getValueFromEvent={normFile}
           rules={[{ required: true, message: "이미지를 업로드 해주세요!" }]}
-          name="image"
+          name="healthupload"
           style={{
-            background: "#fff5ee",
-            margin: "0 50px",
-            border: "1.5px solid #e6e6fa",
+            background: "rgb(13,133,254)",
+            // margin: "0 50px",
+            border: "1.8px solid #e6e6fa",
+            borderRadius: " 35px 35px  35px 6px",
+            padding: "20px",
           }}
         >
           {/* 운동 사진 업로드 */}
@@ -142,6 +151,12 @@ const Health = () => {
           label="운동선택"
           name="healthselect"
           rules={[{ required: true, message: "운동을 선택해주세요!" }]}
+          style={{
+            background: "	#dcdcdc",
+            // border: "1.8px solid #e6e6fa",
+            borderRadius: " 35px 35px  6px 35px",
+            padding: "20px",
+          }}
         >
           <Select
             options={[
@@ -158,9 +173,7 @@ const Health = () => {
                 value: "수영",
               },
             ]}
-            style={{
-              width: 200,
-            }}
+            style={{ width: "200px" }}
           ></Select>
         </Form.Item>
 
@@ -169,6 +182,12 @@ const Health = () => {
           label="운동한 시간"
           name="healthtime"
           rules={[{ required: true, message: "운동한 시간을 선택해주세요!" }]}
+          style={{
+            background: "rgb(13,133,254)",
+            // border: "1.8px solid #e6e6fa",
+            borderRadius: " 35px 35px  35px 6px",
+            padding: "20px",
+          }}
         >
           <TimePicker
             defaultValue={dayjs("00:00", format)}
@@ -183,12 +202,27 @@ const Health = () => {
           label="소모칼로리"
           name="minuscalorie"
           rules={[{ required: true, message: "소모한 칼로리를 입력해주세요!" }]}
+          style={{
+            background: "	 #dcdcdc",
+            // border: "1.8px solid #e6e6fa",
+            borderRadius: " 35px 35px  6px 35px",
+            padding: "20px",
+          }}
         >
           <Input minLength={1} maxLength={5} />
         </Form.Item>
 
         {/* 메모 입력 란 */}
-        <Form.Item label="메모" name="memo">
+        <Form.Item
+          label="메모"
+          name="memo"
+          style={{
+            background: "rgb(13,133,254)",
+            // border: "1.8px solid #e6e6fa",
+            borderRadius: " 35px 35px  35px 6px",
+            padding: "20px",
+          }}
+        >
           <TextArea
             rows={6}
             cols={30}
@@ -199,7 +233,11 @@ const Health = () => {
 
         {/* 저장/취소 버튼 */}
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+          <Button
+            type="primary"
+            htmlType="submit"
+            style={{ backgroundColor: "rgb(13,133,254)" }}
+          >
             Save
           </Button>
           <Button>Cancel</Button>
