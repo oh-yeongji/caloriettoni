@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import { React, useState } from "react";
 import "react-calendar/dist/Calendar.css";
-import {
-  CalendarWrap,
-  CalendarMain,
-  CalendarSpace,
-} from "../style/ScheduleCss";
+import { CalendarWrap, CalendarMain } from "../style/ScheduleCss";
 import moment from "moment";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Schedule = () => {
   const [value, onChange] = useState(new Date());
@@ -15,10 +13,12 @@ const Schedule = () => {
       <h2>Calorittoni</h2>
       <div>
         <form>
-          <input type="text"></input>
+          <textarea placeholder="본인의 목표롤 설정하고 실천해 보세요!"></textarea>
+          <button>
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </button>
         </form>
       </div>
-      <CalendarSpace></CalendarSpace>
       <CalendarMain
         onChange={onChange}
         value={value}
