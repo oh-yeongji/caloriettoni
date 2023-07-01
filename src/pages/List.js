@@ -1,4 +1,5 @@
 import { React, useEffect, useState } from "react";
+// import WeeklyCalendar from "../components/WeeklyCalendar";
 import {
   ListDietWrap,
   ListHealthWrap,
@@ -27,15 +28,15 @@ const List = () => {
         cal: "칼로리",
         memo: "아자꾸 왜 안먹히는건지 이해를 할수가 없네 짜증나게 야 좀 먹혀봐라 왜 자꾸 글이 흐럴 넘치니",
       },
-      {
-        ifood: "인덱스",
-        iuser: "사용자2",
-        idate: "날짜",
-        food: "음식2",
-        pic: "사진2",
-        cal: "칼로리2",
-        memo: "김수한무 두루미와 거북이 척박사123",
-      },
+      // {
+      //   ifood: "인덱스",
+      //   iuser: "사용자2",
+      //   idate: "날짜",
+      //   food: "음식2",
+      //   pic: "사진2",
+      //   cal: "칼로리2",
+      //   memo: "김수한무 두루미와 거북이 척박사123",
+      // },
       // {
       //   ifood: "인덱스",
       //   iuser: "사용자3",
@@ -89,6 +90,14 @@ const List = () => {
     setHealthList(newTodoData);
   };
 
+  // const [showDetails, setShowDetails] = useState(false);
+  // const [data, setData] = useState(null);
+
+  // const showDetailsHandle = dayStr => {
+  //   setData(dayStr);
+  //   setShowDetails(true);
+  // };
+
   return (
     <ListWrap>
       <div>
@@ -104,7 +113,7 @@ const List = () => {
                 <span>칼로리: {item.cal}</span>
               </li>
               <li>
-                <p style={{ wordBreak: "keep-all" }}>메모: {item.memo}</p>
+                <p>메모: {item.memo}</p>
               </li>
             </ul>
 
