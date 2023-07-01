@@ -44,6 +44,12 @@ export const Graph = styled.div`
   border-radius: 10px;
   margin-bottom: 37px;
   border-radius: 35px 35px 6px 35px;
+
+  .test {
+    width: 500px;
+    height: 200px;
+    background: red;
+  }
 `;
 
 export const TodayUp = styled.div`
