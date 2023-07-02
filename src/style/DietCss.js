@@ -1,12 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Total = styled.div`
-  /* position: relative; */
   background-color: #f0f8ff;
-  /* margin: 50px auto 0; */
-  .weekly {
-    height: 50px;
-  }
+  padding-top: 44px;
   form > div {
     /* margin-bottom: 40px; */
     /* width: 100%; */

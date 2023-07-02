@@ -80,8 +80,6 @@ const Health = () => {
   };
   return (
     <Total>
-      <div className="weekly">주간달력</div>
-
       <Form
         labelCol={{
           span: 4,

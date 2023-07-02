@@ -7,10 +7,7 @@ export const Total = styled.div`
   /* margin: 50px auto 0; */
   border-radius: 0 0 30px 30px;
   padding-bottom: 50px;
-
-  .weekly {
-    height: 50px;
-  }
+  padding-top: 44px;
 
   /* 내용 사이의 여백 */
   Form > div {

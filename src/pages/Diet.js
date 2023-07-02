@@ -72,7 +72,7 @@ const Diet = () => {
   return (
     <>
       <Total>
-        <div className="weekly">주간달력</div>
+    
 
         <Form
           labelCol={{
