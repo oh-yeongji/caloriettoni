@@ -10,13 +10,14 @@ import Schedule from "./pages/Schedule";
 import List from "./pages/List";
 import Footer from "./components/Footer";
 import { useEffect } from "react";
-import { getFoodCate } from "./api/api";
+
+import { getHealthCate } from "./api/api";
 
 function App() {
+  useEffect(() => {
+    getHealthCate();
+  }, []);
 
-  useEffect(()=>{
-    getFoodCate();
-  },[])
 
   return (
     <div className="wrap">

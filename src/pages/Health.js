@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Total } from "../style/HealthCss";
 import { PlusOutlined } from "@ant-design/icons";
 import {
@@ -12,6 +12,7 @@ import {
   message,
 } from "antd";
 import dayjs from "dayjs";
+import { getHealthCate } from "../api/api";
 const { TextArea } = Input;
 
 // 파일 미리보기
@@ -32,6 +33,14 @@ const normFile = e => {
 const format = "HH:mm";
 
 const Health = () => {
+  // 헬스 목록 axios 호출
+  const getCateList = () => {
+    getHealthCate();
+  };
+  useEffect(() => {
+    getCateList();
+  }, []);
+
   // Modal 창 활성화 여부
   const [previewOpen, setPreviewOpen] = useState(false);
   // Modal 창에 보여줄 파일명
@@ -80,8 +89,6 @@ const Health = () => {
   };
   return (
     <Total>
-      <div className="weekly">주간달력</div>
-
       <Form
         labelCol={{
           span: 4,
