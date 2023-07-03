@@ -9,8 +9,15 @@ import NotFound from "./pages/NotFound";
 import Schedule from "./pages/Schedule";
 import List from "./pages/List";
 import Footer from "./components/Footer";
+import { useEffect } from "react";
+import { getFoodCate } from "./api/api";
 
 function App() {
+
+  useEffect(()=>{
+    getFoodCate();
+  },[])
+
   return (
     <div className="wrap">
       <Routes>
