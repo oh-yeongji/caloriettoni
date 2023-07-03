@@ -2,10 +2,12 @@ import styled from "@emotion/styled";
 
 export const Total = styled.div`
   width: 500px;
-  height: 800px;
-  background: pink;
+  background: #f0f8ff;
+  border-radius: 30px;
+  margin-top: 23px;
   padding: 0 50px;
   padding-top: 20px;
+  padding-bottom: 71px;
 `;
 export const Mypage = styled.div`
   margin: 20px 0 0 0;
@@ -50,7 +52,7 @@ export const GraphTotal = styled.div`
     margin-bottom: 37px;
   }
 
-  .test {
+  .btns {
     width: 400px;
     height: 50px;
 
@@ -71,8 +73,8 @@ export const TodayUp = styled.div`
   height: 120px;
   border-radius: 35px 35px 35px 6px;
   background-color: #dcdcdc;
-  margin-top: 29px;
-  margin-bottom: 20px;
+  margin-top: 54px;
+  margin-bottom: 41px;
 `;
 
 export const TodayDown = styled.div`

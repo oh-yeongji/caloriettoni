@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Total } from "../style/DietCss";
 
 import { PlusOutlined } from "@ant-design/icons";
@@ -22,6 +22,62 @@ const normFile = e => {
 };
 
 const Diet = () => {
+  // foodOption state
+  const [foodOption, setFoodOption] = useState([]);
+  const [foodData, setFoodData] = useState([]);
+  const [calorie, setCalorie] = useState("");
+
+  useEffect(() => {
+    // 서버 임시 데이터
+    const foodData = [
+      {
+        ifood: 1,
+        foodName: "비빔국수",
+        f_kcal: 800,
+        foodPic:
+          "D:/download/foodcate/비빔국수/a0701b61-e7cd-4d6a-ab5e-79c0d82275b5.jpg",
+      },
+      {
+        ifood: 2,
+        foodName: "배",
+        f_kcal: 50,
+        foodPic:
+          "D:/download/foodcate/배/b85984fb-2aa1-4656-abdf-abe3993224f9.jpg",
+      },
+      {
+        ifood: 3,
+        foodName: "칼국수",
+        f_kcal: 600,
+        foodPic:
+          "D:/download/foodcate/칼국수/9d5b1768-e647-4fb5-a559-a146f5f5f949.jpg",
+      },
+    ];
+    // 목록을 만들어줌
+    const opt = foodData.map(item => {
+      const data = {
+        label: item.foodName,
+        value: item.ifood,
+      };
+      return data;
+    });
+    setFoodOption(opt);
+
+    setFoodData(foodData);
+  }, []);
+
+  // 목록이 바뀌면 실행되는 함수.
+  const handleChangeFood = value => {
+    // 여기에서 넘어오는 변수값은 foodOption 의  value 이며
+    // ifood 이다.
+    console.log(value);
+    // 이를 이용해서 칼로리를 콘솔에 출력하시오.
+    const food = foodData.find(item => item.ifood === value);
+    setCalorie(() => food.f_kcal);
+  };
+  useEffect(() => {
+    console.log("칼로리 변경", calorie);
+  }, [calorie]);
+
   // Modal 창 활성화 여부
   const [previewOpen, setPreviewOpen] = useState(false);
   // Modal 창에 보여줄 파일명
@@ -65,15 +121,14 @@ const Diet = () => {
   // form 관련
   const [form] = Form.useForm();
   const [requiredMark, setRequiredMarkType] = useState("");
-  const onRequiredTypeChange = ({ requiredMarkValue }) => {
+  const onRequiredTypeChange = ({ requiredMarkValue, intakecalorie }) => {
     setRequiredMarkType(requiredMarkValue);
+    setCalorie(calorie);
   };
 
   return (
     <>
       <Total>
-    
-
         <Form
           labelCol={{
             span: 4,
@@ -88,7 +143,9 @@ const Diet = () => {
           form={form}
           layout="horizontal"
           initialValues={{
+            //어떤 필드가 필수인지 사용자에게 알려줌
             requiredMarkValue: requiredMark,
+            intakecalorie: calorie,
           }}
           onValuesChange={onRequiredTypeChange}
           requiredMark={requiredMark}
@@ -162,28 +219,15 @@ const Diet = () => {
             }}
           >
             <Select
-              options={[
-                {
-                  label: "샐러드",
-                  value: "샐러드",
-                },
-                {
-                  label: "사과",
-                  value: "사과",
-                },
-                {
-                  label: "밥",
-                  value: "밥",
-                },
-              ]}
+              options={foodOption}
               style={{
                 width: 200,
               }}
+              onChange={handleChangeFood}
             ></Select>
           </Form.Item>
 
           {/* 섭취칼로리 알림/입력 란 */}
-
           <Form.Item
             label="섭취칼로리"
             name="intakecalorie"
@@ -196,7 +240,7 @@ const Diet = () => {
               borderRadius: " 35px 35px 6px 35px",
             }}
           >
-            <Input minLength={1} maxLength={5} />
+            <Input value={calorie} />
           </Form.Item>
 
           {/* 메모 입력 란 */}

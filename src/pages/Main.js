@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   faChevronLeft,
   faChevronRight,
@@ -12,255 +12,300 @@ import {
   TodayUp,
   TodayDown,
 } from "../style/MainCss";
+// 서버에서 가지고 오는 샘플 데이터
+// 연간 데이터
+const dataYear = [
+  {
+    id: "섭취칼로리량",
+    color: "hsl(268, 70%, 50%)",
 
+    data: [
+      {
+        x: "2월",
+        y: 43,
+      },
+      {
+        x: "3월",
+        y: 139,
+      },
+      {
+        x: "4월",
+        y: 73,
+      },
+      {
+        x: "5월",
+        y: 135,
+      },
+      {
+        x: "6월",
+        y: 23,
+      },
+      {
+        x: "7월",
+        y: 31,
+      },
+      {
+        x: "8월",
+        y: 39,
+      },
+      {
+        x: "9월",
+        y: 59,
+      },
+      {
+        x: "10월",
+        y: 279,
+      },
+      {
+        x: "11월",
+        y: 79,
+      },
+      {
+        x: "12월",
+        y: 29,
+      },
+    ],
+  },
+  {
+    id: "소모칼로리량",
+    color: "hsl(242, 70%, 50%)",
+    data: [
+      {
+        x: "1월",
+        y: 59,
+      },
+      {
+        x: "2월",
+        y: 19,
+      },
+      {
+        x: "3월",
+        y: 29,
+      },
+      {
+        x: "4월",
+        y: 49,
+      },
+      {
+        x: "5월",
+        y: 9,
+      },
+      {
+        x: "6월",
+        y: 93,
+      },
+      {
+        x: "7월",
+        y: 21,
+      },
+      {
+        x: "8월",
+        y: 56,
+      },
+      {
+        x: "9월",
+        y: 14,
+      },
+      {
+        x: "10월",
+        y: 24,
+      },
+      {
+        x: "11월",
+        y: 32,
+      },
+      {
+        x: "12월",
+        y: 21,
+      },
+    ],
+  },
+  {
+    id: "잔여칼로리량",
+    color: "hsl(124, 70%, 50%)",
+    data: [
+      {
+        x: "1월",
+        y: 81,
+      },
+      {
+        x: "2월",
+        y: 36,
+      },
+      {
+        x: "3월",
+        y: 54,
+      },
+      {
+        x: "4월",
+        y: 49,
+      },
+      {
+        x: "5월",
+        y: 56,
+      },
+      {
+        x: "6월",
+        y: 10,
+      },
+      {
+        x: "7월",
+        y: 21,
+      },
+      {
+        x: "8월",
+        y: 15,
+      },
+      {
+        x: "9월",
+        y: 110,
+      },
+      {
+        x: "10월",
+        y: 105,
+      },
+      {
+        x: "11월",
+        y: 132,
+      },
+      {
+        x: "12월",
+        y: 11,
+      },
+    ],
+  },
+];
+// 주간 데이터
+const dataWeek = [
+  {
+    id: "섭취칼로리량",
+    color: "hsl(268, 70%, 50%)",
+
+    data: [
+      {
+        x: "월",
+        y: 20,
+      },
+      {
+        x: "화",
+        y: 30,
+      },
+      {
+        x: "수",
+        y: 43,
+      },
+      {
+        x: "목",
+        y: 139,
+      },
+      {
+        x: "금",
+        y: 73,
+      },
+      {
+        x: "토",
+        y: 135,
+      },
+      {
+        x: "일",
+        y: 23,
+      },
+    ],
+  },
+  {
+    id: "소모칼로리량",
+    color: "hsl(242, 70%, 50%)",
+    data: [
+      {
+        x: "월",
+        y: 0,
+      },
+      {
+        x: "화",
+        y: 30,
+      },
+      {
+        x: "수",
+        y: 43,
+      },
+      {
+        x: "목",
+        y: 139,
+      },
+      {
+        x: "금",
+        y: 73,
+      },
+      {
+        x: "토",
+        y: 135,
+      },
+      {
+        x: "일",
+        y: 23,
+      },
+    ],
+  },
+  {
+    id: "잔여칼로리량",
+    color: "hsl(124, 70%, 50%)",
+    data: [
+      {
+        x: "월",
+        y: 0,
+      },
+      {
+        x: "화",
+        y: 30,
+      },
+      {
+        x: "수",
+        y: 43,
+      },
+      {
+        x: "목",
+        y: 139,
+      },
+      {
+        x: "금",
+        y: 73,
+      },
+      {
+        x: "토",
+        y: 135,
+      },
+      {
+        x: "일",
+        y: 23,
+      },
+    ],
+  },
+];
 const Main = () => {
+  // 화면에 보여줄 데이터를 위한 변수
+  const [cartData, setChartData] = useState([]);
+  useEffect(() => {
+    setChartData(dataWeek);
+  }, []);
+
+  // 주간 및 연간 저장 state
+  const [showPeriod, setShowPeriod] = useState("주간");
+  // 명칭이 이상하다.
+  const handleDate = () => {
+    setShowPeriod("주간");
+    setChartData(dataWeek);
+  };
+  const handleYear = () => {
+    setShowPeriod("연간");
+    setChartData(dataYear);
+  };
+
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [height, setHeight] = useState("");
   const [wight, setWeight] = useState("");
-  const hi = () => {
-    alert("hi");
-  };
-  // 그래프에 넣어줄 데이터 state값
-  const data = [
-    {
-      id: "섭취칼로리량",
-      color: "hsl(268, 70%, 50%)",
 
-      data: [
-        {
-          x: "",
-          y: 0,
-        },
-        {
-          x: "월",
-          y: 80,
-        },
-        {
-          x: "화",
-          y: 41,
-        },
-        {
-          x: "수",
-          y: 109,
-        },
-        {
-          x: "목",
-          y: 72,
-        },
-        {
-          x: "금",
-          y: 105,
-        },
-        {
-          x: "토",
-          y: 22,
-        },
-        {
-          x: "일",
-          y: 279,
-        },
-      ],
-    },
-    {
-      id: "소모칼로리량",
-      color: "hsl(242, 70%, 50%)",
-      data: [
-        {
-          x: "월",
-          y: 93,
-        },
-        {
-          x: "화",
-          y: 231,
-        },
-        {
-          x: "수",
-          y: 216,
-        },
-        {
-          x: "목",
-          y: 154,
-        },
-        {
-          x: "금",
-          y: 294,
-        },
-        {
-          x: "토",
-          y: 232,
-        },
-        {
-          x: "일",
-          y: 21,
-        },
-      ],
-    },
-    {
-      id: "잔여칼로리량",
-      color: "hsl(124, 70%, 50%)",
-      data: [
-        {
-          x: "월",
-          y: 269,
-        },
-        {
-          x: "화",
-          y: 139,
-        },
-        {
-          x: "수",
-          y: 294,
-        },
-        {
-          x: "목",
-          y: 242,
-        },
-        {
-          x: "금",
-          y: 85,
-        },
-        {
-          x: "토",
-          y: 190,
-        },
-        {
-          x: "일",
-          y: 201,
-        },
-      ],
-    },
-  ];
-  // const data1 = [
-  //   {
-  //     id: "섭취칼로리량",
-  //     color: "hsl(268, 70%, 50%)",
-
-  //     data: [
-  //       {
-  //         x: "",
-  //         y: 0,
-  //       },
-  //       {
-  //         x: "월",
-  //         y: 80,
-  //       },
-  //       {
-  //         x: "화",
-  //         y: 41,
-  //       },
-  //       {
-  //         x: "수",
-  //         y: 109,
-  //       },
-  //       {
-  //         x: "목",
-  //         y: 72,
-  //       },
-  //       {
-  //         x: "금",
-  //         y: 105,
-  //       },
-  //       {
-  //         x: "토",
-  //         y: 22,
-  //       },
-  //       {
-  //         x: "일",
-  //         y: 279,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: "소모칼로리량",
-  //     color: "hsl(242, 70%, 50%)",
-  //     data: [
-  //       {
-  //         x: "월",
-  //         y: 93,
-  //       },
-  //       {
-  //         x: "화",
-  //         y: 231,
-  //       },
-  //       {
-  //         x: "수",
-  //         y: 216,
-  //       },
-  //       {
-  //         x: "목",
-  //         y: 154,
-  //       },
-  //       {
-  //         x: "금",
-  //         y: 294,
-  //       },
-  //       {
-  //         x: "토",
-  //         y: 232,
-  //       },
-  //       {
-  //         x: "일",
-  //         y: 21,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: "잔여칼로리량",
-  //     color: "hsl(124, 70%, 50%)",
-  //     data: [
-  //       {
-  //         x: "1월",
-  //         y: 269,
-  //       },
-  //       {
-  //         x: "2월",
-  //         y: 139,
-  //       },
-  //       {
-  //         x: "3월",
-  //         y: 294,
-  //       },
-  //       {
-  //         x: "4월",
-  //         y: 242,
-  //       },
-  //       {
-  //         x: "5월",
-  //         y: 85,
-  //       },
-  //       {
-  //         x: "6월",
-  //         y: 190,
-  //       },
-  //       {
-  //         x: "7월",
-  //         y: 201,
-  //       },
-  //       {
-  //         x: "8월",
-  //         y: 155,
-  //       },
-  //       {
-  //         x: "9월",
-  //         y: 11,
-  //       },
-  //       {
-  //         x: "10월",
-  //         y: 56,
-  //       },
-  //       {
-  //         x: "11월",
-  //         y: 221,
-  //       },
-  //       {
-  //         x: "12월",
-  //         y: 71,
-  //       },
-  //     ],
-  //   },
-  // ];
   return (
     <Total>
       <Mypage>
@@ -290,7 +335,7 @@ const Main = () => {
         <div className="graph">
           {/* 그래프 표현 */}
           <ResponsiveLine
-            data={data}
+            data={cartData}
             margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
             // 그래프 표시
             xScale={{ type: "point" }}
@@ -360,14 +405,14 @@ const Main = () => {
             ]}
           />
         </div>
-        <div className="test">
+        <div className="btns">
           <div className="left">
             {/* <FontAwesomeIcon icon={faChevronLeft} onClick={hi} /> <h2>{week==="주간"?주간을 보여주고:아니면 연간을 보여줘라}주간</h2> */}
-            <FontAwesomeIcon icon={faChevronLeft} onClick={hi} />
+            <FontAwesomeIcon icon={faChevronLeft} onClick={handleDate} />
           </div>
-          <p>주간</p>
+          <p>{showPeriod}</p>
           <div className="right">
-            <FontAwesomeIcon icon={faChevronRight} onClick={hi} />
+            <FontAwesomeIcon icon={faChevronRight} onClick={handleYear} />
           </div>
         </div>
       </GraphTotal>
