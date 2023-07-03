@@ -1,5 +1,7 @@
 import { React, useEffect, useState } from "react";
-// import WeeklyCalendar from "../components/WeeklyCalendar";
+import { useParams } from "react-router-dom";
+import { getDiet } from "../api/api";
+import axios from "axios";
 import {
   ListDietWrap,
   ListHealthWrap,
@@ -14,140 +16,111 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 const List = () => {
   // 1. 식단 출력할 데이터가 서버에서 전달 되어야 한다.
   // 1.1. 목록을 관리할 state 를 만들어야 한다.
-  const [foodList, setFoodList] = useState([]);
+  const { date } = useParams();
+  const [foodList, setFoodList] = useState(null);
   // 1.2. 목록은 배열로 보관해야 한다.
   useEffect(() => {
-    // axios 로 가져옮
-    const tempData = [
-      {
-        ifood: "인덱스",
-        iuser: "사용자1",
-        idate: "날짜",
-        food: "음식1",
-        pic: "날 밀어 내지마라",
-        cal: "칼로리",
-        memo: "아자꾸 왜 안먹히는건지 이해를 할수가 없네 짜증나게 야 좀 먹혀봐라 왜 자꾸 글이 흐럴 넘치니",
-      },
-      // {
-      //   ifood: "인덱스",
-      //   iuser: "사용자2",
-      //   idate: "날짜",
-      //   food: "음식2",
-      //   pic: "사진2",
-      //   cal: "칼로리2",
-      //   memo: "김수한무 두루미와 거북이 척박사123",
-      // },
-      // {
-      //   ifood: "인덱스",
-      //   iuser: "사용자3",
-      //   idate: "날짜",
-      //   food: "음식3",
-      //   pic: "사진3",
-      //   cal: "칼로리3",
-      //   memo: "김수한무 두루미와 거북박사ㄹ",
-      // },
-    ];
-    setFoodList(tempData);
-  }, []);
+    getDiet();
+  }, [date]);
 
   // 2. 운동 출력할 데이터가 서버에서 전달 되어야 한다.
   // 2.1. 목록을 관리할 state 를 만들어야 한다.
   const [healthList, setHealthList] = useState([]);
   // 2.2. 목록은 배열로 보관해야 한다.
   useEffect(() => {
-    // axios 로 가져옮
-    const tempData = [
-      {
-        iuser: "사용자1",
-        pic: "사진",
-        ihel: "수영",
-        time: "2시간",
-        cal: "800칼로리",
-        memo: "유감유감유감유감유감유감유감유감유감유감유감",
-      },
-      {
-        iuser: "사용자2",
-        pic: "사진3",
-        ihel: "수영",
-        time: "3시간",
-        cal: "700칼로리",
-        memo: "유감유감유감유감유감유감유감유감유감유감유감",
-      },
-      // {
-      //   iuser: "사용자3",
-      //   pic: "사진3",
-      //   ihel: "수영",
-      //   time: "1시간",
-      //   cal: "600칼로리",
-      //   memo: "유감유감유감유감유감유감유감유감유감유감유감",
-      // },
-    ];
-    setHealthList(tempData);
-  }, []);
+    getHealth();
+  }, [date]);
 
-  const handleDeleteList = _id => {
-    const newTodoData = healthList.filter(item => item.iuser !== _id);
-    setHealthList(newTodoData);
+  const getHealth = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/list?date=${date}`,
+      );
+      if (response.data.length > 0) {
+        setHealthList(response.data[0]);
+      } else {
+        setHealthList(null);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  // const [showDetails, setShowDetails] = useState(false);
-  // const [data, setData] = useState(null);
-
-  // const showDetailsHandle = dayStr => {
-  //   setData(dayStr);
-  //   setShowDetails(true);
-  // };
+  const handleDeleteFood = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/list/${foodList.id}`);
+      setFoodList(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleDeleteHealth = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/list/${healthList.id}`);
+      setHealthList(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <ListWrap>
       <div>
         <h2>식단 일지</h2>
-        {foodList.map((item, index) => (
-          <ListDietWrap key={index}>
-            <ListDietPic>{item.pic}</ListDietPic>
+        {foodList ? (
+          <ListDietWrap>
+            <ListDietPic>{foodList.foodpic}</ListDietPic>
             <ul>
               <li>
-                <span>식단: {item.food}</span>
+                <h3>{foodList.item}</h3>
               </li>
               <li>
-                <span>칼로리: {item.cal}</span>
+                <span>식단: {foodList.food}</span>
               </li>
               <li>
-                <p>메모: {item.memo}</p>
+                <span>칼로리: {foodList.foodcal}</span>
+              </li>
+              <li>
+                <p>메모: {foodList.foodmemo}</p>
               </li>
             </ul>
-
-            <DeleteButton>
+            <DeleteButton onClick={handleDeleteFood}>
               <FontAwesomeIcon icon={faTrashCan} />
             </DeleteButton>
           </ListDietWrap>
-        ))}
+        ) : (
+          <p>해당 날짜에 기록이 없습니다.</p>
+        )}
       </div>
       <div>
         <h2>운동 일지</h2>
-        {healthList.map((item, index) => (
-          <ListHealthWrap key={index}>
-            <ListHealthPic>{item.pic}</ListHealthPic>
+        {healthList ? (
+          <ListHealthWrap>
+            <ListHealthPic>{healthList.healthpic}</ListHealthPic>
             <ul>
               <li>
-                <span>운동: {item.food}</span>
+                <h3>{healthList.item}</h3>
               </li>
               <li>
-                <span>운동시간: {item.food}</span>
+                <span>운동: {healthList.health}</span>
               </li>
               <li>
-                <span>소모 칼로리: {item.cal}</span>
+                <span>운동시간: {healthList.healthtime}</span>
               </li>
               <li>
-                <p>메모: {item.memo}</p>
+                <span>소모 칼로리: {healthList.healcal}</span>
+              </li>
+              <li>
+                <p>메모: {healthList.healthmemo}</p>
               </li>
             </ul>
-
-            <DeleteButton onClick={handleDeleteList}>
+            <DeleteButton onClick={handleDeleteHealth}>
               <FontAwesomeIcon icon={faTrashCan} />
             </DeleteButton>
           </ListHealthWrap>
-        ))}
+        ) : (
+          <p>해당 날짜에 기록이 없습니다.</p>
+        )}
       </div>
     </ListWrap>
   );

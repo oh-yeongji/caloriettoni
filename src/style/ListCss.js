@@ -16,7 +16,7 @@ export const ListDietWrap = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  width: 500px;
+  width: 480px;
   height: 150px;
   border: 1px solid lightblue;
   border-radius: 10px;
