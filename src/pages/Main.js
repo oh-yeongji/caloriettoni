@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Button } from "antd";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ResponsiveLine } from "@nivo/line";
-import {
-  Total,
-  Mypage,
-  GraphTotal,
-  TodayUp,
-  TodayDown,
-} from "../style/MainCss";
+import { Total, Mypage, GraphTotal, TodayTotal, Logo } from "../style/MainCss";
 
 // 서버에서 가지고 오는 샘플 데이터
 // 연간 데이터
@@ -288,14 +283,16 @@ const dataWeek = [
 ];
 const Main = () => {
   // 화면에 보여줄 데이터를 위한 변수
-  const [cartData, setChartData] = useState([]);
+  const [chartData, setChartData] = useState([]);
+
+  //화면에 한번만 뿌리기
   useEffect(() => {
     setChartData(dataWeek);
   }, []);
 
   // 주간 및 연간 저장 state
   const [showPeriod, setShowPeriod] = useState("주간");
-  // 명칭이 이상하다.
+
   const handleDate = () => {
     setShowPeriod("주간");
     setChartData(dataWeek);
@@ -310,28 +307,50 @@ const Main = () => {
   const [gender, setGender] = useState("");
   const [height, setHeight] = useState("");
   const [wight, setWeight] = useState("");
+  // 버튼의 크기 default:middle
+  // const [size, setSize] = useState("large");
 
   return (
     <Total>
+      <Logo>
+        <img src="../images/logotop.png" alt="logo" />
+      </Logo>
       <Mypage>
-        <div>
-          <img src="" alt="본인사진"></img>
-          <div className="privacy">
-            <div>
-              이름:<p></p>{" "}
+        <div className="privacyTotal">
+          <div className="privacyInfo">
+            <div className="privacyLeft">
+              <img src="../images/logo.png" alt="사용자 사진" />
             </div>
-            <div>
-              나이:<p></p>{" "}
+            <div className="privacyRight">
+              <div>
+                <p>이름:</p>
+                <p>김남수</p>
+              </div>
+              <div>
+                <p>나이:</p>
+                <p>28</p>
+              </div>
+              <div>
+                <p> 성별:</p>
+                <p>남</p>
+              </div>
+              <div>
+                <p> 키:</p>
+                <p>180m</p>
+              </div>
+              <div>
+                <p>몸무게:</p>
+                <p>71kg</p>
+              </div>
             </div>
-            <div>
-              성별:<p></p>{" "}
-            </div>
-            <div>
-              키:<p></p>{" "}
-            </div>
-            <div>
-              몸무게:<p></p>{" "}
-            </div>
+          </div>
+          <div className="btns">
+            <Button type="primary" style={{ top: "-32px", marginLeft: "9px" }}>
+              정보수정
+            </Button>
+            <Button style={{ top: "-32px", marginLeft: "12px" }}>
+              로그아웃
+            </Button>
           </div>
         </div>
       </Mypage>
@@ -340,7 +359,7 @@ const Main = () => {
         <div className="graph">
           {/* 그래프 표현 */}
           <ResponsiveLine
-            data={cartData}
+            data={chartData}
             margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
             // 그래프 표시
             xScale={{ type: "point" }}
@@ -422,14 +441,17 @@ const Main = () => {
         </div>
       </GraphTotal>
 
-      <TodayUp>
+      <TodayTotal>
         {/* 칼로리 섭취량 */}
-        현재 섭취 칼로리량:
-      </TodayUp>
-      <TodayDown>
-        {/* 칼로리 소모량 */}
-        현재 소모 칼로리량:
-      </TodayDown>
+        <div className="todayUp">
+          <p>현재 섭취 칼로리량</p>
+          <p className="upCalorie">gkdl</p>
+        </div>
+        <div className="todayDown">
+          <p>현재 소모 칼로리량</p>
+          <p className="downCalorie">gkdl</p>
+        </div>
+      </TodayTotal>
     </Total>
   );
 };

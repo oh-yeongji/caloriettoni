@@ -14,6 +14,7 @@ import {
 import dayjs from "dayjs";
 import { getHealthCate } from "../api/writefetch";
 const { TextArea } = Input;
+import { Logo } from "../style/ListCss";
 
 // 파일 미리보기
 const getBase64 = file =>
@@ -89,6 +90,9 @@ const Health = () => {
   };
   return (
     <Total>
+      <Logo>
+        <img src="../images/logotop.png" alt="logo" />
+      </Logo>
       <Form
         labelCol={{
           span: 4,

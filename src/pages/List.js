@@ -9,6 +9,7 @@ import {
   ListHealthPic,
   ListWrap,
   DeleteButton,
+  Logo,
 } from "../style/ListCss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
@@ -65,6 +66,9 @@ const List = () => {
 
   return (
     <ListWrap>
+      <Logo>
+        <img src="../images/logotop.png" alt="logo" />
+      </Logo>
       <div>
         <h2>식단 일지</h2>
         {foodList ? (

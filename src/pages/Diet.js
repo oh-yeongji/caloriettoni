@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Total } from "../style/DietCss";
-
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload, Radio, Select, Input, Button, Form } from "antd";
 const { TextArea } = Input;
+import { Logo } from "../style/ListCss";
 
 // 파일 미리보기
 const getBase64 = file =>
@@ -120,15 +120,19 @@ const Diet = () => {
 
   // form 관련
   const [form] = Form.useForm();
-  const [requiredMark, setRequiredMarkType] = useState("");
-  const onRequiredTypeChange = ({ requiredMarkValue, intakecalorie }) => {
-    setRequiredMarkType(requiredMarkValue);
-    setCalorie(calorie);
-  };
+  //사용자에게 필수입력 필드를 알려줌
+  // const [requiredMark, setRequiredMarkType] = useState("");
+  // const onRequiredTypeChange = ({ requiredMarkValue, intakecalorie }) => {
+  //   setRequiredMarkType(requiredMarkValue);
+  //   setCalorie(calorie);
+  // };
 
   return (
     <>
       <Total>
+        <Logo>
+          <img src="../images/logotop.png" alt="logo" />
+        </Logo>
         <Form
           labelCol={{
             span: 4,
@@ -142,13 +146,15 @@ const Diet = () => {
           }}
           form={form}
           layout="horizontal"
-          initialValues={{
-            //어떤 필드가 필수인지 사용자에게 알려줌
-            requiredMarkValue: requiredMark,
-            intakecalorie: calorie,
-          }}
-          onValuesChange={onRequiredTypeChange}
-          requiredMark={requiredMark}
+          initialValues={
+            {
+              //어떤 필드가 필수인지 사용자에게 알려줌
+              // requiredMarkValue: requiredMark,
+              // intakecalorie: calorie,
+            }
+          }
+          // onValuesChange={onRequiredTypeChange}
+          // requiredMark={requiredMark}
         >
           <Form.Item
             label="Upload"
@@ -274,6 +280,7 @@ const Diet = () => {
             </Button>
             <Button style={{ top: "-10px" }}>Cancel</Button>
           </Form.Item>
+          
         </Form>
       </Total>
       <div
