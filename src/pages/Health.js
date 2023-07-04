@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Total } from "../style/HealthCss";
 import { PlusOutlined } from "@ant-design/icons";
-import { Logo } from "../style/ListCss";
 import {
   Modal,
   Upload,
@@ -14,6 +13,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { getHealthCate } from "../api/writefetch";
+import { Logo } from "../style/ListCss";
 const { TextArea } = Input;
 
 // 파일 미리보기

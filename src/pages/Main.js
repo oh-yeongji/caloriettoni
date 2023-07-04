@@ -3,7 +3,6 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { Logo } from "../style/ListCss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ResponsiveLine } from "@nivo/line";
 import {
@@ -13,6 +12,7 @@ import {
   TodayUp,
   TodayDown,
 } from "../style/MainCss";
+import { Logo } from "../style/ListCss";
 
 // 서버에서 가지고 오는 샘플 데이터
 // 연간 데이터
