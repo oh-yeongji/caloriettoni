@@ -12,6 +12,7 @@ import {
   TodayUp,
   TodayDown,
 } from "../style/MainCss";
+
 // 서버에서 가지고 오는 샘플 데이터
 // 연간 데이터
 const dataYear = [
@@ -20,6 +21,10 @@ const dataYear = [
     color: "hsl(268, 70%, 50%)",
 
     data: [
+      {
+        x: "1월",
+        y: 0,
+      },
       {
         x: "2월",
         y: 43,

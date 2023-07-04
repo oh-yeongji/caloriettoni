@@ -11,13 +11,12 @@ import List from "./pages/List";
 import Footer from "./components/Footer";
 import { useEffect } from "react";
 
-import { getHealthCate } from "./api/api";
+import { getHealthCate } from "./api/writefetch";
 
 function App() {
   useEffect(() => {
     getHealthCate();
   }, []);
-
 
   return (
     <div className="wrap">

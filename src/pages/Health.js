@@ -12,7 +12,7 @@ import {
   message,
 } from "antd";
 import dayjs from "dayjs";
-import { getHealthCate } from "../api/api";
+import { getHealthCate } from "../api/writefetch";
 const { TextArea } = Input;
 
 // 파일 미리보기

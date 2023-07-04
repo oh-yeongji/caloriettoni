@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getDiet } from "../api/api";
+import { getDiet } from "../api/writefetch";
 import axios from "axios";
 import {
   ListDietWrap,
@@ -20,7 +20,7 @@ const List = () => {
   const [foodList, setFoodList] = useState(null);
   // 1.2. 목록은 배열로 보관해야 한다.
   useEffect(() => {
-    getDiet();
+    // getDiet();
   }, [date]);
 
   // 2. 운동 출력할 데이터가 서버에서 전달 되어야 한다.
@@ -28,7 +28,7 @@ const List = () => {
   const [healthList, setHealthList] = useState([]);
   // 2.2. 목록은 배열로 보관해야 한다.
   useEffect(() => {
-    getHealth();
+    // getHealth();
   }, [date]);
 
   const getHealth = async () => {
