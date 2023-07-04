@@ -12,6 +12,15 @@ export const ListWrap = styled.div`
   }
 `;
 
+export const Logo = styled.div`
+  display: flex;
+  width: 500px;
+  padding: 20px 0;
+  img {
+    width: 400px;
+  }
+`;
+
 export const ListDietWrap = styled.div`
   position: relative;
   display: flex;

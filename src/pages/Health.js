@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Total } from "../style/HealthCss";
 import { PlusOutlined } from "@ant-design/icons";
+import { Logo } from "../style/ListCss";
 import {
   Modal,
   Upload,
@@ -89,6 +90,9 @@ const Health = () => {
   };
   return (
     <Total>
+      <Logo>
+        <img src="../images/logotop.png" alt="logo" />
+      </Logo>
       <Form
         labelCol={{
           span: 4,

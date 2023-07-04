@@ -9,6 +9,7 @@ import {
   ListHealthPic,
   ListWrap,
   DeleteButton,
+  Logo,
 } from "../style/ListCss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
@@ -19,6 +20,7 @@ const List = () => {
   const { date } = useParams();
   const [foodList, setFoodList] = useState(null);
   // 1.2. 목록은 배열로 보관해야 한다.
+  // 1.3. 목록도 배열로 보관해야 한다.
   useEffect(() => {
     // getDiet();
   }, [date]);
@@ -65,6 +67,9 @@ const List = () => {
 
   return (
     <ListWrap>
+      <Logo>
+        <img src="../images/logotop.png" alt="logo" />
+      </Logo>
       <div>
         <h2>식단 일지</h2>
         {foodList ? (

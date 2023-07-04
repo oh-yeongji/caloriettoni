@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Total } from "../style/DietCss";
-
+import { Logo } from "../style/ListCss";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload, Radio, Select, Input, Button, Form } from "antd";
 const { TextArea } = Input;
@@ -129,6 +129,9 @@ const Diet = () => {
   return (
     <>
       <Total>
+        <Logo>
+          <img src="../images/logotop.png" alt="logo" />
+        </Logo>
         <Form
           labelCol={{
             span: 4,

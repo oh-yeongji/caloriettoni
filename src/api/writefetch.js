@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 // const axiosInstance = axios.create({
 //   timeout: 1000,
 // });
@@ -10,6 +11,7 @@ import axios from "axios";
 export const getHealthCate = async () => {
   try {
     const res = await axios.get("/api/exrec/exlist");
+
     const result = res.data;
     console.log(result);
   } catch (err) {
@@ -19,4 +21,6 @@ export const getHealthCate = async () => {
 
 
 
+
 //*******************식단**************************
+
