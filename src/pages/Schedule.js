@@ -6,7 +6,7 @@ import moment from "moment";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Schedule = () => {
+const Schedule = ({ thisDate, setThisDate }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const navigate = useNavigate();
 
@@ -14,7 +14,10 @@ const Schedule = () => {
 
   const handleDateClick = date => {
     const formattedDate = moment(date).format("YYYYMMDD");
-    navigate(`/List/${formattedDate}`);
+    console.log(formattedDate);
+    setThisDate(formattedDate);
+    // navigate(`/List/${formattedDate}`);
+    navigate("/list");
   };
 
   return (

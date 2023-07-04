@@ -7,8 +7,8 @@ export const getDietList = async () => {
     const res = await axios.get(`/List${location.pathname}/food`);
     const result = res.data;
     console.log(result);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -18,7 +18,7 @@ export const getHealthList = async () => {
     const res = await axios.get(`/List${location.pathname}/hel`);
     const result = res.data;
     console.log(result);
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
   }
 };

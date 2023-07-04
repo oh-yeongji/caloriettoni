@@ -1,4 +1,5 @@
-import { React, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   ListDietWrap,
   ListHealthWrap,
@@ -11,34 +12,58 @@ import {
 } from "../style/ListCss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { getDietList, getHealthList } from "../api/listfetch";
+import axios from "axios";
 
-const List = () => {
+const List = ({ thisDate }) => {
   const [foodList, setFoodList] = useState([]);
   const [healthList, setHealthList] = useState([]);
 
-  const getDietListLoad = async () => {
+  console.log("현재날짜" + thisDate);
+  const location = useLocation();
+
+  const getDietList = async () => {
     try {
-      const data = await getDietList();
-      setFoodList(data);
+      const res = await axios.get(`/List/${thisDate}/food`);
+      const result = res.data;
+      setFoodList(result);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getHealthListLoad = async () => {
+  const getHealthList = async () => {
+    console.log(location.pathname);
     try {
-      const data = await getHealthList();
-      setHealthList(data);
+      const res = await axios.get(`/List/${thisDate}/hel`);
+      const result = res.data;
+      setHealthList(result);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getDietListLoad();
-    getHealthListLoad();
+    getDietList();
+    getHealthList();
   }, []);
+
+  // const getDietListLoad = async () => {
+  //   try {
+  //     const data = await getDietList();
+  //     setFoodList(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const getHealthListLoad = async () => {
+  //   try {
+  //     const data = await getHealthList();
+  //     setHealthList(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <ListWrap>
