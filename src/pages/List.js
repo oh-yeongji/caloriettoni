@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getDiet } from "../api/writefetch";
 import axios from "axios";
 import {
   ListDietWrap,
@@ -29,7 +30,7 @@ const List = () => {
   const [healthList, setHealthList] = useState([]);
   // 2.2. 목록은 배열로 보관해야 한다.
   useEffect(() => {
-    getHealth();
+    // getHealth();
   }, [date]);
 
   const getHealth = async () => {
