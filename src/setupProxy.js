@@ -5,7 +5,7 @@ module.exports = function (app) {
     "/api",
     createProxyMiddleware({
       //스웨거에서 /api앞에 것을 떼서 붙이기
-      target: "http://192.168.0.144:5006",
+      target: "http://192.168.0.207:8080",
       changeOrigin: true,
     }),
   );

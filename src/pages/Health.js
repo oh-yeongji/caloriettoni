@@ -13,6 +13,7 @@ import {
 } from "antd";
 import dayjs from "dayjs";
 import { getHealthCate } from "../api/writefetch";
+import { Logo } from "../style/ListCss";
 const { TextArea } = Input;
 import { Logo } from "../style/ListCss";
 

@@ -22,6 +22,11 @@ export const Logo = styled.div`
 `;
 
 export const ListDietWrap = styled.div`
+  width: 500px;
+  height: 500px;
+`;
+
+export const ListDietContain = styled.div`
   position: relative;
   display: flex;
   align-items: center;
