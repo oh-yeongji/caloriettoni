@@ -17,7 +17,7 @@ const { TextArea } = Input;
 import { Logo } from "../style/ListCss";
 
 // 파일 미리보기
-const getBase64 = file =>
+const filePreview = file =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -57,7 +57,7 @@ const Health = () => {
   // upload 컴포넌트에서 처리
   const handlePreview = async file => {
     if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+      file.preview = await filePreview(file.originFileObj);
     }
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
@@ -84,10 +84,11 @@ const Health = () => {
 
   // form 관련
   const [form] = Form.useForm();
-  const [requiredMark, setRequiredMarkType] = useState("");
-  const onRequiredTypeChange = ({ requiredMarkValue }) => {
-    setRequiredMarkType(requiredMarkValue);
-  };
+  //사용자에게 필수입력 필드를 알려줌.
+  // const [requiredMark, setRequiredMarkType] = useState("");
+  // const onRequiredTypeChange = ({ requiredMarkValue }) => {
+  //   setRequiredMarkType(requiredMarkValue);
+  // };
   return (
     <Total>
       <Logo>
@@ -107,11 +108,14 @@ const Health = () => {
         }}
         form={form}
         layout="horizontal"
-        initialValues={{
-          requiredMarkValue: requiredMark,
-        }}
-        onValuesChange={onRequiredTypeChange}
-        requiredMark={requiredMark}
+        initialValues={
+          {
+            //사용자가 필수입력해야하는 필드를 알려줌.
+            // requiredMarkValue: requiredMark,
+          }
+        }
+        // onValuesChange={onRequiredTypeChange}
+        // requiredMark={requiredMark}
       >
         <Form.Item
           label="Upload"

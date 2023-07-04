@@ -336,7 +336,7 @@ const Main = () => {
               </div>
               <div>
                 <p> 키:</p>
-                <p>180m</p>
+                <p>180cm</p>
               </div>
               <div>
                 <p>몸무게:</p>

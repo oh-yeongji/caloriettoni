@@ -5,8 +5,8 @@ import { Modal, Upload, Radio, Select, Input, Button, Form } from "antd";
 const { TextArea } = Input;
 import { Logo } from "../style/ListCss";
 
-// 파일 미리보기
-const getBase64 = file =>
+//사진 파일 미리보기
+const filePreview = file =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -14,6 +14,7 @@ const getBase64 = file =>
     reader.onerror = error => reject(error);
   });
 
+//사진 파일 선택
 const normFile = e => {
   if (Array.isArray(e)) {
     return e;
@@ -24,7 +25,9 @@ const normFile = e => {
 const Diet = () => {
   // foodOption state
   const [foodOption, setFoodOption] = useState([]);
+  //foodCate state
   const [foodData, setFoodData] = useState([]);
+  //food calorie
   const [calorie, setCalorie] = useState("");
 
   useEffect(() => {
@@ -52,7 +55,9 @@ const Diet = () => {
           "D:/download/foodcate/칼국수/9d5b1768-e647-4fb5-a559-a146f5f5f949.jpg",
       },
     ];
+
     // 목록을 만들어줌
+    //foodData가 배열리아 map돌림
     const opt = foodData.map(item => {
       const data = {
         label: item.foodName,
@@ -67,16 +72,16 @@ const Diet = () => {
 
   // 목록이 바뀌면 실행되는 함수.
   const handleChangeFood = value => {
-    // 여기에서 넘어오는 변수값은 foodOption 의  value 이며
+    // 여기에서 넘어오는 변수값은 foodOption 의  value(순서) 이며
     // ifood 이다.
-    console.log(value);
+
     // 이를 이용해서 칼로리를 콘솔에 출력하시오.
     const food = foodData.find(item => item.ifood === value);
+    console.log(food);
     setCalorie(() => food.f_kcal);
   };
-  useEffect(() => {
-    console.log("칼로리 변경", calorie);
-  }, [calorie]);
+  //칼로리만 감시
+  useEffect(() => {}, [calorie]);
 
   // Modal 창 활성화 여부
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -93,14 +98,16 @@ const Diet = () => {
   // upload 컴포넌트에서 처리
   const handlePreview = async file => {
     if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+      file.preview = await filePreview(file.originFileObj);
     }
+
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
     setPreviewTitle(
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
     );
   };
+
   // upload 컴포넌트에서 처리
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
 
@@ -171,6 +178,7 @@ const Diet = () => {
             {/* 식단 사진 업로드 */}
 
             <Upload
+              //Form의 제출 동작을 지정하는데 사용
               action="/upload.do"
               listType="picture-card"
               fileList={fileList}
@@ -256,7 +264,6 @@ const Diet = () => {
             name="intakememo"
             style={{
               padding: "20px",
-
               background: "#dcdcdc",
               borderRadius: " 35px 35px  35px 6px",
             }}
