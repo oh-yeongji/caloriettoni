@@ -4,7 +4,7 @@ const axiosInstance = axios.create({
   timeout: 1000,
 });
 
-// 운동카테고리목록 Get 기능
+// health
 export const getHealthCate = async () => {
   try {
     const res = await axiosInstance.get("/api/exrec/exlist");

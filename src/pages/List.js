@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getDiet } from "../api/api";
 import axios from "axios";
 import {
   ListDietWrap,
@@ -9,6 +8,7 @@ import {
   ListHealthPic,
   ListWrap,
   DeleteButton,
+  Logo,
 } from "../style/ListCss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
@@ -20,7 +20,7 @@ const List = () => {
   const [foodList, setFoodList] = useState(null);
   // 1.2. 목록은 배열로 보관해야 한다.
   useEffect(() => {
-    getDiet();
+    // getDiet();
   }, [date]);
 
   // 2. 운동 출력할 데이터가 서버에서 전달 되어야 한다.
@@ -65,6 +65,9 @@ const List = () => {
 
   return (
     <ListWrap>
+      <Logo>
+        <img src="../images/logotop.png" alt="logo" />
+      </Logo>
       <div>
         <h2>식단 일지</h2>
         {foodList ? (

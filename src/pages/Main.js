@@ -3,6 +3,7 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import { Logo } from "../style/ListCss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ResponsiveLine } from "@nivo/line";
 import {
@@ -308,6 +309,9 @@ const Main = () => {
 
   return (
     <Total>
+      <Logo>
+        <img src="../images/logotop.png" alt="logo" />
+      </Logo>
       <Mypage>
         <div>
           <img src="" alt="본인사진"></img>
