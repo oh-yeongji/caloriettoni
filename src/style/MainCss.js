@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 
+
 export const Total = styled.div`
   width: 500px;
   background: #f0f8ff;
