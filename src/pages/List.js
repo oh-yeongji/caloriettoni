@@ -19,6 +19,7 @@ const List = () => {
   const { date } = useParams();
   const [foodList, setFoodList] = useState(null);
   // 1.2. 목록은 배열로 보관해야 한다.
+  // 1.3. 목록도 배열로 보관해야 한다.
   useEffect(() => {
     // getDiet();
   }, [date]);
