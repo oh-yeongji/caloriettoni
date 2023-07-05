@@ -30,7 +30,7 @@ const Diet = () => {
   //식사 종류 state
   const [foodData, setFoodData] = useState([]);
   //식사 calorie
-  const [intakecalorie, setIntakecalorie] = useState(0);
+  const [intakecalorie, setIntakeCalorie] = useState("");
 
   // 기본 카테고리 정보 axios 호출 결과 반영
   //load할때 시간걸리니까 async로 잡아줌
@@ -39,11 +39,12 @@ const Diet = () => {
       //getDietCalorie받아올때 await로 기다려
       const res = await getDietCalorie();
       //제대로 들어왔는지 찍어봐야 함.
-      console.log(res);
-      const calorieList = res.map((item, index) => {
+      // console.log(res);
+      const calorieList = res.map(item => {
         const data = {
           // AntDesign option 규칙: label화면에 보이는것 value는 실제 값
           //ifood, f_kcal는 데이터 넘겨준이름.
+          //여기서 뜯어줌??
           label: item.foodName,
           value: item.foodName,
           ifood: item.ifood,
@@ -51,24 +52,25 @@ const Diet = () => {
         };
         return data;
       });
-      // console.log(calorieList);
-      // calorieList를 담아준다.
+      console.log(calorieList);
+      // calorieList를 안담아주면 카테고리가 안뜸.
       setFoodData(calorieList);
     } catch (err) {
       console.log(err);
     }
   };
-  //마운트 될때 load를 보여준다.
+  //마운트될때 한번만 load를 보여준다.
   useEffect(() => {
     getDietCalorieLoad();
   }, []);
 
   // 목록이 바뀌면 실행되는 함수.
   const handleChangeFood = value => {
+    //label과 value 같은걸 찾아서 food에 담아라.
     const food = foodData.find(item => item.label === value);
     const f_kcal = food.f_kcal;
-    setIntakecalorie(f_kcal);
-    // Form 컴포넌트의 initialValues를 업데이트
+    setIntakeCalorie(f_kcal);
+    // Form 컴포넌트의 initialValues를 f_kcal로 업데이트
     form.setFieldsValue({ intakecalorie: f_kcal });
   };
 
