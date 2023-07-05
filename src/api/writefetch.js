@@ -1,10 +1,5 @@
 import axios from "axios";
 
-
-// const axiosInstance = axios.create({
-//   timeout: 1000,
-// });
-
 //************************운동********************
 
 //운동 사진 업로드 Get기능
@@ -30,8 +25,15 @@ export const getHealthCate = async () => {
   }
 };
 
-
-
-
 //*******************식단**************************
 
+export const getDietCalorie = async () => {
+  try {
+    const res = await axios.get("api/foodcate");
+    const result = res.data;
+    // console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};

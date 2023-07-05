@@ -4,6 +4,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload, Radio, Select, Input, Button, Form } from "antd";
 const { TextArea } = Input;
 import { Logo } from "../style/ListCss";
+import { getDietCalorie } from "../api/writefetch";
 
 //사진 파일 미리보기
 const filePreview = file =>
@@ -23,65 +24,53 @@ const normFile = e => {
 };
 
 const Diet = () => {
-  // foodOption state
+  const [form] = Form.useForm();
+  // 식사시각 state
   const [foodOption, setFoodOption] = useState([]);
-  //foodCate state
+  //식사 종류 state
   const [foodData, setFoodData] = useState([]);
-  //food calorie
-  const [calorie, setCalorie] = useState("");
+  //식사 calorie
+  const [intakecalorie, setIntakecalorie] = useState(0);
 
+  // 기본 카테고리 정보 axios 호출 결과 반영
+  //load할때 시간걸리니까 async로 잡아줌
+  const getDietCalorieLoad = async () => {
+    try {
+      //getDietCalorie받아올때 await로 기다려
+      const res = await getDietCalorie();
+      //제대로 들어왔는지 찍어봐야 함.
+      console.log(res);
+      const calorieList = res.map((item, index) => {
+        const data = {
+          // AntDesign option 규칙: label화면에 보이는것 value는 실제 값
+          //ifood, f_kcal는 데이터 넘겨준이름.
+          label: item.foodName,
+          value: item.foodName,
+          ifood: item.ifood,
+          f_kcal: item.f_kcal,
+        };
+        return data;
+      });
+      // console.log(calorieList);
+      // calorieList를 담아준다.
+      setFoodData(calorieList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  //마운트 될때 load를 보여준다.
   useEffect(() => {
-    // 서버 임시 데이터
-    const foodData = [
-      {
-        ifood: 1,
-        foodName: "비빔국수",
-        f_kcal: 800,
-        foodPic:
-          "D:/download/foodcate/비빔국수/a0701b61-e7cd-4d6a-ab5e-79c0d82275b5.jpg",
-      },
-      {
-        ifood: 2,
-        foodName: "배",
-        f_kcal: 50,
-        foodPic:
-          "D:/download/foodcate/배/b85984fb-2aa1-4656-abdf-abe3993224f9.jpg",
-      },
-      {
-        ifood: 3,
-        foodName: "칼국수",
-        f_kcal: 600,
-        foodPic:
-          "D:/download/foodcate/칼국수/9d5b1768-e647-4fb5-a559-a146f5f5f949.jpg",
-      },
-    ];
-
-    // 목록을 만들어줌
-    //foodData가 배열리아 map돌림
-    const opt = foodData.map(item => {
-      const data = {
-        label: item.foodName,
-        value: item.ifood,
-      };
-      return data;
-    });
-    setFoodOption(opt);
-
-    setFoodData(foodData);
+    getDietCalorieLoad();
   }, []);
 
   // 목록이 바뀌면 실행되는 함수.
   const handleChangeFood = value => {
-    // 여기에서 넘어오는 변수값은 foodOption 의  value(순서) 이며
-    // ifood 이다.
-
-    // 이를 이용해서 칼로리를 콘솔에 출력하시오.
-    const food = foodData.find(item => item.ifood === value);
-    console.log(food);
-    setCalorie(() => food.f_kcal);
+    const food = foodData.find(item => item.label === value);
+    const f_kcal = food.f_kcal;
+    setIntakecalorie(f_kcal);
+    // Form 컴포넌트의 initialValues를 업데이트
+    form.setFieldsValue({ intakecalorie: f_kcal });
   };
-  //칼로리만 감시
-  useEffect(() => {}, [calorie]);
 
   // Modal 창 활성화 여부
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -126,7 +115,7 @@ const Diet = () => {
   );
 
   // form 관련
-  const [form] = Form.useForm();
+  // const [form] = Form.useForm();
   //사용자에게 필수입력 필드를 알려줌
   // const [requiredMark, setRequiredMarkType] = useState("");
   // const onRequiredTypeChange = ({ requiredMarkValue, intakecalorie }) => {
@@ -153,13 +142,7 @@ const Diet = () => {
           }}
           form={form}
           layout="horizontal"
-          initialValues={
-            {
-              //어떤 필드가 필수인지 사용자에게 알려줌
-              // requiredMarkValue: requiredMark,
-              // intakecalorie: calorie,
-            }
-          }
+          initialValues={{ intakecalorie }}
           // onValuesChange={onRequiredTypeChange}
           // requiredMark={requiredMark}
         >
@@ -233,7 +216,8 @@ const Diet = () => {
             }}
           >
             <Select
-              options={foodOption}
+              options={foodData}
+              placeholder="식단을 선택해주세요!"
               style={{
                 width: 200,
               }}
@@ -254,7 +238,7 @@ const Diet = () => {
               borderRadius: " 35px 35px 6px 35px",
             }}
           >
-            <Input value={calorie} />
+            <Input placeholder="칼로리를 입력해주세요." />
           </Form.Item>
 
           {/* 메모 입력 란 */}
