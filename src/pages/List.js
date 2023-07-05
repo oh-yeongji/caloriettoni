@@ -1,4 +1,6 @@
-import { React, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getFoodSchedule, getHealthSchedule } from "../api/schedulefetch";
+import { useLocation } from "react-router-dom";
 import {
   ListDietWrap,
   ListHealthWrap,
@@ -11,34 +13,25 @@ import {
 } from "../style/ListCss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-import { getDietList, getHealthList } from "../api/listfetch";
 
 const List = () => {
   const [foodList, setFoodList] = useState([]);
   const [healthList, setHealthList] = useState([]);
-
-  const getDietListLoad = async () => {
-    try {
-      const data = await getDietList();
-      setFoodList(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getHealthListLoad = async () => {
-    try {
-      const data = await getHealthList();
-      setHealthList(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const location = useLocation();
 
   useEffect(() => {
-    getDietListLoad();
-    getHealthListLoad();
-  }, []);
+    const data = async () => {
+      try {
+        const foodRes = await getFoodSchedule(location.pathname);
+        setFoodList(foodRes);
+        const healthRes = await getHealthSchedule(location.pathname);
+        setHealthList(healthRes);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    data();
+  }, [location.pathname]);
 
   return (
     <ListWrap>
@@ -48,18 +41,18 @@ const List = () => {
       <ListDietWrap>
         <h2>식단 일지</h2>
         {foodList && foodList.length > 0 ? (
-          foodList.map((item, index) => (
-            <ListDietContain key={index}>
+          foodList.map((item, imealRecord) => (
+            <ListDietContain key={imealRecord}>
               <ListDietPic>{item.uefpic}</ListDietPic>
               <ul>
                 <li>
                   <h3>{item.uef_time}</h3>
                 </li>
                 <li>
-                  <span>식단: {item.foodname}</span>
+                  <span>식단: {item.ifood}</span>
                 </li>
                 <li>
-                  <span>칼로리:{item.f_kcal}</span>
+                  <span>칼로리:{item.uefKcal}</span>
                 </li>
                 <li>
                   <p>메모: {item.ctnt}</p>
@@ -85,7 +78,7 @@ const List = () => {
                   <h3>{item.ihelCate}</h3>
                 </li>
                 <li>
-                  <span>운동:</span>
+                  <span>운동: {item.ihelCate}</span>
                 </li>
                 <li>
                   <span>운동시간: {item.time}</span>
@@ -94,7 +87,7 @@ const List = () => {
                   <span>소모 칼로리: {item.uhKcal}</span>
                 </li>
                 <li>
-                  <p>메모: {}</p>
+                  <p>메모: {item.ctnt}</p>
                 </li>
               </ul>
               <DeleteButton>
