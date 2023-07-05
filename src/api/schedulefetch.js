@@ -2,9 +2,9 @@ import axios from "axios";
 
 export const getFoodSchedule = async () => {
   try {
-    const res = await axios.get(`/List${location.pathname}/food`);
+    const res = await axios.get(`/api${location.pathname}/food`);
     const result = res.data;
-    console.log(result);
+    return result;
   } catch (err) {
     console.log(err);
   }
@@ -12,9 +12,9 @@ export const getFoodSchedule = async () => {
 
 export const getHealthSchedule = async () => {
   try {
-    const res = await axios.get(`/List${location.pathname}/hel`);
+    const res = await axios.get(`/api${location.pathname}/hel`);
     const result = res.data;
-    console.log(result);
+    return result;
   } catch (err) {
     console.log(err);
   }

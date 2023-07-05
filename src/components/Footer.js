@@ -15,6 +15,11 @@ const Footer = () => {
     <FooterWrap>
       <MainMenu>
         <li>
+          <Link to="/main">
+            <FontAwesomeIcon icon={faHouse} />
+          </Link>
+        </li>
+        <li>
           <Link to="/Schedule">
             <FontAwesomeIcon icon={faCalendarDays} />
           </Link>
@@ -24,19 +29,10 @@ const Footer = () => {
             <FontAwesomeIcon icon={faDumbbell} />
           </Link>
         </li>
-        <li>
-          <Link to="/main">
-            <FontAwesomeIcon icon={faHouse} />
-          </Link>
-        </li>
+
         <li>
           <Link to="/diet">
             <FontAwesomeIcon icon={faPlateWheat} />
-          </Link>
-        </li>
-        <li>
-          <Link to="/list">
-            <FontAwesomeIcon icon={faList} />
           </Link>
         </li>
       </MainMenu>

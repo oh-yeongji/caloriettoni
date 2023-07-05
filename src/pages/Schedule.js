@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "react-calendar/dist/Calendar.css";
-import { CalendarWrap, CalendarMain } from "../style/ScheduleCss";
 import moment from "moment";
+import { CalendarWrap, CalendarMain } from "../style/ScheduleCss";
+import "react-calendar/dist/Calendar.css";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Schedule = ({ thisDate, setThisDate }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date());
+const Schedule = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {}, []);
-
   const handleDateClick = date => {
-    const formattedDate = moment(date).format("YYYYMMDD");
-    console.log(formattedDate);
-    setThisDate(formattedDate);
-    // navigate(`/List/${formattedDate}`);
-    navigate("/list");
+    const dayClick = moment(date).format("YYYYMMDD");
+    navigate(`/list/${dayClick}`);
   };
 
+
+  
   return (
     <CalendarWrap>
       <h2>Calorittoni</h2>
@@ -35,10 +30,10 @@ const Schedule = ({ thisDate, setThisDate }) => {
         </form>
       </div>
       <CalendarMain
-        value={selectedDate}
+        value={new Date()}
         calendarType="US"
         formatDay={(locale, date) => moment(date).format("D")}
-        onClickDay={handleDateClick}
+        onClickDay={date => handleDateClick(date)}
       />
     </CalendarWrap>
   );
