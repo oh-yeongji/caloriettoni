@@ -1,21 +1,22 @@
-// import axios from "axios";
+import axios from "axios";
 
-// export const getFoodSchedule = async (setDailyList, scheduleDate) => {
-//   try {
-//     const res = await axios.get(`/api/list/${scheduleDate}/food`);
-//     const result = await res.data;
-//     setDailyList(result);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+// List Delete 기능
+export const deleteFoodList = async _id => {
+  try {
+    const res = await axios.delete(`/api${location.pathname}/food`);
+    const result = res.data;
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-// export const getHealthSchedule = async (setDailyList, scheduleDate) => {
-//   try {
-//     const res = await axios.get(`/api/list/${scheduleDate}/hel`);
-//     const result = await res.data;
-//     setDailyList(result);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+export const deleteHealthList = async _id => {
+  try {
+    const res = await axios.delete(`/api${location.pathname}/hel`);
+    const result = res.data;
+    console.log(result);
+  } catch (error) {
+    console.log(error);
+  }
+};

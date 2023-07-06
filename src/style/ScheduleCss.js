@@ -12,36 +12,8 @@ export const CalendarWrap = styled.div`
     font-size: 40px;
     height: 100px;
   }
-  div {
-    position: relative;
-    form {
-      position: relative;
-      width: 90%;
-      padding-bottom: 30px;
-      textarea {
-        border-radius: 13px;
-        padding: 15px;
-        width: 100%;
-        height: 100px;
-        border: none;
-        resize: none;
-      }
-      button {
-        position: absolute;
-        right: 15px;
-        top: 39%;
-        transform: translateY(-50%);
-        background: lightblue;
-        border: 1px solid lightblue;
-        border-radius: 7px;
-        width: 30px;
-        height: 30px;
-        font-size: 20px;
-        cursor: pointer;
-      }
-    }
-  }
 `;
+
 export const CalendarMain = styled(Calendar)`
   font-family: "Noto Sans KR", sans-serif;
   width: 500px;
@@ -55,6 +27,7 @@ export const CalendarMain = styled(Calendar)`
       color: whitesmoke;
       font-size: 25px;
       font-family: "Noto Sans KR", sans-serif;
+      pointer-events: none;
     }
     .react-calendar__navigation__label:hover {
       background: lightblue;

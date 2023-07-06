@@ -16,7 +16,7 @@ export const ListWrap = styled.div`
 export const Logo = styled.div`
   display: flex;
   width: 500px;
-  padding: 20px 0;
+  padding-top: 10px;
   img {
     width: 400px;
   }
