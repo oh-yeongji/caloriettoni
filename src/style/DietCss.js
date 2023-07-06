@@ -13,16 +13,6 @@ export const Total = styled.div`
     margin-bottom: 20px;
   }
 
-  .receiveCal {
-    display: flex;
-    position: relative;
-    left: 10px;
-    p {
-      position: relative;
-      left: 5px;
-      top: 5px;
-    }
-  }
   .ant-upload-wrapper.ant-upload-picture-card-wrapper
     .ant-upload.ant-upload-select
     > .ant-upload {

@@ -36,7 +36,7 @@ const Diet = () => {
   //식사 종류 state
   const [foodData, setFoodData] = useState([]);
   //식사 calorie
-  const [intakecalorie, setIntakeCalorie] = useState(null);
+  const [intakeCalorie, setIntakeCalorie] = useState(null);
 
   // 기본 카테고리 정보 axios 호출 결과 반영
   //load할때 시간걸리니까 async로 잡아줌
@@ -59,6 +59,7 @@ const Diet = () => {
         };
         return data;
       });
+
       console.log(calorieList);
       // calorieList를 안담아주면 카테고리가 안뜸.
       setFoodData(calorieList);
@@ -66,20 +67,23 @@ const Diet = () => {
       console.log(err);
     }
   };
+
   //마운트될때 한번만 load를 보여준다.
+  //서버에서 자료가져올때 자료받아올자리.
   useEffect(() => {
     getDietCalorieLoad();
   }, []);
 
   // 목록이 바뀌면 실행되는 함수.
   const handleChangeFood = value => {
-    //label과 value 같은걸 찾아서 food에 담아라.
+    //value와 value 같은걸 찾아서 food에 담아라.
     const food = foodData.find(item => item.value === value);
-    console.log(food);
+
+    console.log("나는 푸드입니당", food);
     const f_kcal = food.f_kcal;
     setIntakeCalorie(f_kcal);
     // Form 컴포넌트의 initialValues를 f_kcal로 업데이트
-    form.setFieldsValue({ intakecalorie: f_kcal });
+    form.setFieldsValue({ intakeCalorie: f_kcal });
   };
 
   // Modal 창 활성화 여부
@@ -143,7 +147,7 @@ const Diet = () => {
     // 일반 글자 전송
     const result = await postDietRecord(
       values.foodselect,
-      values.intakecalorie,
+      values.intakeCalorie,
       parseInt(values.mealtime),
       values.intakememo,
     );
@@ -187,7 +191,7 @@ const Diet = () => {
           }}
           form={form}
           layout="horizontal"
-          initialValues={{ intakecalorie }}
+          initialValues={{ intakeCalorie }}
           onFinish={onFinish}
         >
           <Form.Item
@@ -272,7 +276,7 @@ const Diet = () => {
           {/* 섭취칼로리 알림/입력 란 */}
           <Form.Item
             label="섭취칼로리(kcal) "
-            name="intakecalorie"
+            name="intakeCalorie"
             rules={[{ required: true, message: "음식목록을 선택해주세요!" }]}
             style={{
               padding: "20px",
@@ -281,7 +285,11 @@ const Diet = () => {
             }}
           >
             {/* <div className="receiveCal"> */}
-            <Input minLength={1} maxLength={5} />
+            <Input
+              minLength={1}
+              maxLength={5}
+              placeholder="섭취한 칼로리는??"
+            />
             {/* <p>kcal</p> */}
             {/* </div> */}
           </Form.Item>

@@ -27,7 +27,8 @@ export const getHealthCalorie = async () => {
 };
 
 //*******************식단**************************
-//식단 칼로리 get기능
+
+//식단 칼로리 get기능(모든음식카테고리 조회)
 export const getDietCalorie = async () => {
   try {
     const res = await axios.get("/api/foodcate");

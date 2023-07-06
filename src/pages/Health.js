@@ -244,7 +244,11 @@ const Health = () => {
             padding: "20px",
           }}
         >
-          <Input minLength={1} maxLength={5} />
+          <Input
+            minLength={1}
+            maxLength={5}
+            placeholder="분당 소모 칼로리는??"
+          />
         </Form.Item>
 
         {/* 운동한 시간 */}
