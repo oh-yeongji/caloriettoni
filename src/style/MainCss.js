@@ -1,13 +1,16 @@
 import styled from "@emotion/styled";
 
-
 export const Total = styled.div`
   width: 500px;
   background: #f0f8ff;
-  border-radius: 30px;
   padding: 0 50px;
   /* padding-top: 20px; */
   padding-bottom: 56px;
+  .formatDate {
+    display: flex;
+    margin-left: 171px;
+    margin-bottom: 9px;
+  }
   div {
     margin-bottom: 20px;
   }

@@ -4,7 +4,12 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload, Radio, Select, Input, Button, Form } from "antd";
 const { TextArea } = Input;
 import { Logo } from "../style/ListCss";
-import { getDietCalorie } from "../api/writefetch";
+import {
+  getDietCalorie,
+  postDietRecord,
+  postDietRecordIuser,
+} from "../api/writefetch";
+import { useNavigate } from "react-router";
 
 //사진 파일 미리보기
 const filePreview = file =>
@@ -24,13 +29,14 @@ const normFile = e => {
 };
 
 const Diet = () => {
+  const navigator = useNavigate();
   const [form] = Form.useForm();
   // 식사시각 state
-  const [foodOption, setFoodOption] = useState([]);
+  const [foodOption, setFoodOption] = useState(null);
   //식사 종류 state
   const [foodData, setFoodData] = useState([]);
   //식사 calorie
-  const [intakecalorie, setIntakeCalorie] = useState("");
+  const [intakecalorie, setIntakeCalorie] = useState(null);
 
   // 기본 카테고리 정보 axios 호출 결과 반영
   //load할때 시간걸리니까 async로 잡아줌
@@ -46,9 +52,10 @@ const Diet = () => {
           //ifood, f_kcal는 데이터 넘겨준이름.
           //여기서 뜯어줌??
           label: item.foodName,
-          value: item.foodName,
-          ifood: item.ifood,
+          //선택되었을때 서버로 가야하므로
+          value: item.ifood,
           f_kcal: item.f_kcal,
+          foodPic: item.foodPic,
         };
         return data;
       });
@@ -67,7 +74,8 @@ const Diet = () => {
   // 목록이 바뀌면 실행되는 함수.
   const handleChangeFood = value => {
     //label과 value 같은걸 찾아서 food에 담아라.
-    const food = foodData.find(item => item.label === value);
+    const food = foodData.find(item => item.value === value);
+    console.log(food);
     const f_kcal = food.f_kcal;
     setIntakeCalorie(f_kcal);
     // Form 컴포넌트의 initialValues를 f_kcal로 업데이트
@@ -115,7 +123,12 @@ const Diet = () => {
       </div>
     </div>
   );
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
+  const formatDate = `${year}-${month}-${day}`;
   // form 관련
   // const [form] = Form.useForm();
   //사용자에게 필수입력 필드를 알려줌
@@ -125,12 +138,42 @@ const Diet = () => {
   //   setCalorie(calorie);
   // };
 
+  const onFinish = async values => {
+    console.log("Success:", values);
+    // 일반 글자 전송
+    const result = await postDietRecord(
+      values.foodselect,
+      values.intakecalorie,
+      parseInt(values.mealtime),
+      values.intakememo,
+    );
+
+    // 전송할 데이터 만들기
+    // 이미지 포함 전송
+    // const formData = new FormData();
+    // formData.append("img", values.foodupload[0]);
+    // const sendData = {
+    //   ifood: values.foodselect,
+    //   ical: values.intakecalorie,
+    //   uefTime: parseInt(values.mealtime),
+    //   ctnt: values.intakememo,
+    // };
+    // const data = new Blob([sendData], { type: "application/json" });
+    // formData.append("data", data);
+
+    // const result = await postDietRecordIuser(formData);
+
+    navigator("/main");
+  };
+
   return (
     <>
       <Total>
         <Logo>
           <img src="../images/logotop.png" alt="logo" />
         </Logo>
+        <div className="formatDate">{formatDate}</div>
+
         <Form
           labelCol={{
             span: 4,
@@ -145,8 +188,7 @@ const Diet = () => {
           form={form}
           layout="horizontal"
           initialValues={{ intakecalorie }}
-          // onValuesChange={onRequiredTypeChange}
-          // requiredMark={requiredMark}
+          onFinish={onFinish}
         >
           <Form.Item
             label="Upload"
@@ -198,9 +240,9 @@ const Diet = () => {
             }}
           >
             <Radio.Group>
-              <Radio.Button value="blackfirst">아침</Radio.Button>
-              <Radio.Button value="lunch">점심</Radio.Button>
-              <Radio.Button value="dinner">저녁</Radio.Button>
+              <Radio.Button value="1">아침</Radio.Button>
+              <Radio.Button value="2">점심</Radio.Button>
+              <Radio.Button value="3">저녁</Radio.Button>
             </Radio.Group>
           </Form.Item>
 
@@ -229,18 +271,19 @@ const Diet = () => {
 
           {/* 섭취칼로리 알림/입력 란 */}
           <Form.Item
-            label="섭취칼로리"
+            label="섭취칼로리(kcal) "
             name="intakecalorie"
-            rules={[
-              { required: true, message: "섭취한 칼로리를 입력해주세요!" },
-            ]}
+            rules={[{ required: true, message: "음식목록을 선택해주세요!" }]}
             style={{
               padding: "20px",
               background: "rgb(13,133,254)",
               borderRadius: " 35px 35px 6px 35px",
             }}
           >
-            <Input placeholder="칼로리를 입력해주세요." />
+            {/* <div className="receiveCal"> */}
+            <Input minLength={1} maxLength={5} />
+            {/* <p>kcal</p> */}
+            {/* </div> */}
           </Form.Item>
 
           {/* 메모 입력 란 */}

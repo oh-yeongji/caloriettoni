@@ -34,7 +34,67 @@ const normFile = e => {
 const format = "HH:mm";
 
 const Health = () => {
+  // form 관련
+  const [form] = Form.useForm();
+  //운동 목록
+  const [healthData, setHealthData] = useState([]);
+  //운동한 시간
+  const [healthPeriod, setHealthPeriod] = useState([]);
+  //소비 calorie
+  const [minuscalorie, setMinusCalorie] = useState("");
+
   // 헬스 목록 axios 호출
+  const exerciseCate = async () => {
+    try {
+      const res = await getHealthCate();
+      // console.log(res);
+      const healthList = res.map(item => {
+        const data = {
+          label: item.helName,
+          value: item.ihelCate,
+          h_kcal: item.hkcal,
+          exrecPic: "",
+        };
+        return data;
+      });
+      console.log(healthList);
+      setHealthData(healthList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    exerciseCate();
+  }, []);
+  // const getHealthCalorieLoad = async () => {
+  //   try {
+  //     const res = await getHealthCalorie();
+  //     console.log(res);
+  //     const calorieList = res.map(item => {
+  //       const data = {};
+  //       return data;
+  //     });
+  //     console.log(calorieList);
+  //     setHealthDate(calorieList);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getHealthCalorieLoad();
+  // }, []);
+
+  //목록이 바뀌면 실행되는 함수
+  const handleChangHealth = value => {
+    const exercise = healthData.find(item => item.value === value);
+    console.log(exercise);
+    const h_kcal = exercise.h_kcal;
+    setMinusCalorie(h_kcal);
+    // Form 컴포넌트의 initialValues를 h_kcal로 업데이트
+    form.setFieldsValue({ minuscalorie: h_kcal });
+  };
+
   const getCateList = () => {
     getHealthCate();
   };
@@ -81,19 +141,23 @@ const Health = () => {
       </div>
     </div>
   );
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
-  // form 관련
-  const [form] = Form.useForm();
-  //사용자에게 필수입력 필드를 알려줌.
-  // const [requiredMark, setRequiredMarkType] = useState("");
-  // const onRequiredTypeChange = ({ requiredMarkValue }) => {
-  //   setRequiredMarkType(requiredMarkValue);
-  // };
+  const formatDate = `${year}-${month}-${day}`;
+
+  const handleHealthCalorie = () => {
+    console.log("안녕");
+  };
   return (
     <Total>
       <Logo>
         <img src="../images/logotop.png" alt="logo" />
       </Logo>
+      <div className="formatDate">{formatDate}</div>
+
       <Form
         labelCol={{
           span: 4,
@@ -103,19 +167,14 @@ const Health = () => {
         }}
         style={{
           maxWidth: 500,
-          // background: "	#dcdcdc",
+          // background: "   #dcdcdc",
           margin: "0 50px",
         }}
         form={form}
         layout="horizontal"
-        initialValues={
-          {
-            //사용자가 필수입력해야하는 필드를 알려줌.
-            // requiredMarkValue: requiredMark,
-          }
-        }
-        // onValuesChange={onRequiredTypeChange}
-        // requiredMark={requiredMark}
+        initialValues={{
+          minuscalorie,
+        }}
       >
         <Form.Item
           label="Upload"
@@ -159,28 +218,33 @@ const Health = () => {
           name="healthselect"
           rules={[{ required: true, message: "운동을 선택해주세요!" }]}
           style={{
-            background: "	#dcdcdc",
+            background: "   #dcdcdc",
             borderRadius: " 35px 35px  6px 35px",
             padding: "20px",
           }}
         >
           <Select
-            options={[
-              {
-                label: "헬스",
-                value: "헬스",
-              },
-              {
-                label: "런닝",
-                value: "런닝",
-              },
-              {
-                label: "수영",
-                value: "수영",
-              },
-            ]}
+            //들어올 데이터를 넣어준다.
+            placeholder="운동을 선택해주세요!"
+            options={healthData}
             style={{ width: "200px" }}
+            onChange={handleChangHealth}
           ></Select>
+        </Form.Item>
+
+        {/* 칼로리 소모량 알림/입력 란 */}
+
+        <Form.Item
+          label="분당소모칼로리"
+          name="minuscalorie"
+          rules={[{ required: true, message: "소모칼로리를 입력해주세요!" }]}
+          style={{
+            background: "#dcdcdc",
+            borderRadius: " 35px 35px  35px 6px",
+            padding: "20px",
+          }}
+        >
+          <Input minLength={1} maxLength={5} />
         </Form.Item>
 
         {/* 운동한 시간 */}
@@ -190,39 +254,42 @@ const Health = () => {
           rules={[{ required: true, message: "운동한 시간을 선택해주세요!" }]}
           style={{
             background: "rgb(13,133,254)",
-            borderRadius: " 35px 35px  35px 6px",
-            padding: "20px",
-          }}
-        >
-          <TimePicker
-            defaultValue={dayjs("00:00", format)}
-            format={format}
-            showNow={false}
-          />
-        </Form.Item>
-
-        {/* 칼로리 소모량 알림/입력 란 */}
-
-        <Form.Item
-          label="소모칼로리"
-          name="minuscalorie"
-          rules={[{ required: true, message: "소모칼로리를 입력해주세요!" }]}
-          style={{
-            background: "	 #dcdcdc",
             borderRadius: " 35px 35px  6px 35px",
             padding: "20px",
           }}
         >
-          <Input minLength={1} maxLength={5} />
+          <TimePicker
+            // defaultValue={dayjs("00:00", format)}
+            format={format}
+            showNow={false}
+          />
         </Form.Item>
-
+        <div className="healthInfo">
+          <button onClick={handleHealthCalorie}>계산하기</button>
+          <div className="e_name">
+            <p>운동 :</p>
+            <p>dddsfsddd</p>
+          </div>
+          <div className="m_kcal">
+            <p>분당kcal :</p>
+            <p>ddddfsdfd</p>
+          </div>
+          <div className="e_period">
+            <p> 운동시간 :</p>
+            <p>ddddfsdf</p>
+          </div>
+          <div className="total_e_kcal">
+            <p> 총 소모칼로리 :</p>
+            <p>ddddfvsdf</p>
+          </div>
+        </div>
         {/* 메모 입력 란 */}
         <Form.Item
           label="메모"
           name="memo"
           style={{
             background: "rgb(13,133,254)",
-            borderRadius: " 35px 35px  35px 6px",
+            borderRadius: " 35px 35px  6px 35px",
             padding: "20px",
           }}
         >

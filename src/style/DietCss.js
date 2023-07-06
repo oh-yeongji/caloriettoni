@@ -1,13 +1,28 @@
 import styled from "@emotion/styled";
 
 export const Total = styled.div`
-  border-radius: 30px;
   background-color: #f0f8ff;
-  padding-bottom: 37px;
+  padding-bottom: 92px;
+
+  .formatDate {
+    display: flex;
+    margin-left: 209px;
+    margin-bottom: 9px;
+  }
   form > div {
     margin-bottom: 20px;
   }
 
+  .receiveCal {
+    display: flex;
+    position: relative;
+    left: 10px;
+    p {
+      position: relative;
+      left: 5px;
+      top: 5px;
+    }
+  }
   .ant-upload-wrapper.ant-upload-picture-card-wrapper
     .ant-upload.ant-upload-select
     > .ant-upload {

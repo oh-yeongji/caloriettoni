@@ -309,12 +309,19 @@ const Main = () => {
   const [wight, setWeight] = useState("");
   // 버튼의 크기 default:middle
   // const [size, setSize] = useState("large");
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  const formatDate = `${year}-${month}-${day}`;
 
   return (
     <Total>
       <Logo>
         <img src="../images/logotop.png" alt="logo" />
       </Logo>
+      <div className="formatDate">{formatDate}</div>
       <Mypage>
         <div className="privacyTotal">
           <div className="privacyInfo">
