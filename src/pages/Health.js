@@ -12,7 +12,7 @@ import {
   message,
 } from "antd";
 import dayjs from "dayjs";
-import { getHealthCate } from "../api/writefetch";
+import { getHealthCalorie, getHealthCate } from "../api/writefetch";
 const { TextArea } = Input;
 import { Logo } from "../style/ListCss";
 
@@ -41,9 +41,9 @@ const Health = () => {
   //운동한 시간
   const [healthPeriod, setHealthPeriod] = useState([]);
   //소비 calorie
-  const [minuscalorie, setMinusCalorie] = useState("");
+  const [minuscalorie, setMinusCalorie] = useState(null);
 
-  // 헬스 목록 axios 호출
+  //운동카테고리목록 Get 기능
   const exerciseCate = async () => {
     try {
       const res = await getHealthCate();
@@ -51,9 +51,8 @@ const Health = () => {
       const healthList = res.map(item => {
         const data = {
           label: item.helName,
-          value: item.ihelCate,
+          value: item.helName,
           h_kcal: item.hkcal,
-          exrecPic: "",
         };
         return data;
       });
@@ -66,30 +65,36 @@ const Health = () => {
   useEffect(() => {
     exerciseCate();
   }, []);
-  // const getHealthCalorieLoad = async () => {
-  //   try {
-  //     const res = await getHealthCalorie();
-  //     console.log(res);
-  //     const calorieList = res.map(item => {
-  //       const data = {};
-  //       return data;
-  //     });
-  //     console.log(calorieList);
-  //     setHealthDate(calorieList);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
-  // useEffect(() => {
-  //   getHealthCalorieLoad();
-  // }, []);
+  //헬스 분당 칼로리 get 기능
+
+  const getHealthCalorieLoad = async (ihelCate, time) => {
+    try {
+      const res = await getHealthCalorie();
+      console.log(res);
+      const data = {
+        label: res.helName,
+        value: res.helName,
+        h_kcal: res.hkcal,
+        time: res.time,
+      };
+
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getHealthCalorieLoad();
+  }, []);
 
   //목록이 바뀌면 실행되는 함수
   const handleChangHealth = value => {
     const exercise = healthData.find(item => item.value === value);
     console.log(exercise);
     const h_kcal = exercise.h_kcal;
+    console.log(h_kcal);
     setMinusCalorie(h_kcal);
     // Form 컴포넌트의 initialValues를 h_kcal로 업데이트
     form.setFieldsValue({ minuscalorie: h_kcal });
@@ -235,7 +240,7 @@ const Health = () => {
         {/* 칼로리 소모량 알림/입력 란 */}
 
         <Form.Item
-          label="분당소모칼로리"
+          label="분당소모칼로리(kcal)"
           name="minuscalorie"
           rules={[{ required: true, message: "소모칼로리를 입력해주세요!" }]}
           style={{
@@ -248,6 +253,8 @@ const Health = () => {
             minLength={1}
             maxLength={5}
             placeholder="분당 소모 칼로리는??"
+            disabled={true}
+            style={{ width: "180px" }}
           />
         </Form.Item>
 

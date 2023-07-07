@@ -9,7 +9,7 @@ import {
   postDietRecord,
   postDietRecordIuser,
 } from "../api/writefetch";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 //사진 파일 미리보기
 const filePreview = file =>
@@ -30,6 +30,7 @@ const normFile = e => {
 
 const Diet = () => {
   const navigator = useNavigate();
+
   const [form] = Form.useForm();
   // 식사시각 state
   const [foodOption, setFoodOption] = useState(null);
@@ -167,6 +168,7 @@ const Diet = () => {
 
     // const result = await postDietRecordIuser(formData);
 
+    //작성을 다하고 제출하면 메인으로 이동해라.
     navigator("/main");
   };
 
@@ -289,6 +291,7 @@ const Diet = () => {
               minLength={1}
               maxLength={5}
               placeholder="섭취한 칼로리는??"
+              disabled={true}
             />
             {/* <p>kcal</p> */}
             {/* </div> */}

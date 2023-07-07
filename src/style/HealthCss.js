@@ -12,16 +12,7 @@ export const Total = styled.div`
   Form > div {
     margin-bottom: 20px;
   }
-  .receiveCal {
-    display: flex;
-    position: relative;
-    left: 10px;
-    p {
-      position: relative;
-      left: 5px;
-      top: 5px;
-    }
-  }
+
   .ant-upload-wrapper.ant-upload-picture-card-wrapper
     .ant-upload.ant-upload-select
     > .ant-upload {
@@ -35,6 +26,9 @@ export const Total = styled.div`
     & > div {
       margin-left: 18px;
     }
+  }
+  .ant-input[disabled] {
+    margin-left: 44px;
   }
   .healthInfo {
     display: flex;

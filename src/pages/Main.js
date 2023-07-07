@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ResponsiveLine } from "@nivo/line";
 import { Total, Mypage, GraphTotal, TodayTotal, Logo } from "../style/MainCss";
-
+import { getMypageInfo, getTodayMinusCalorie } from "../api/mainfetch";
 // 서버에서 가지고 오는 샘플 데이터
 // 연간 데이터
 const dataYear = [
@@ -64,6 +64,7 @@ const dataYear = [
         x: "12월",
         y: 29,
       },
+      
     ],
   },
   {
@@ -282,14 +283,75 @@ const dataWeek = [
   },
 ];
 const Main = () => {
-  // 화면에 보여줄 데이터를 위한 변수
+  //mypage info
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState(null);
+  const [height, setHeight] = useState(null);
+  const [weight, setWeight] = useState(null);
+  const [bmi, setBmi] = useState(null);
+  const [pic, setPic] = useState("");
+
+  //chart Data
   const [chartData, setChartData] = useState([]);
 
+  //하루 총 섭취/소비 데이터
+  const [TodayPlusData, setTodayPlusData] = useState({});
+  const [TodayMinusData, setTodayMinusData] = useState({});
+
+  // 하루 총 섭취/소비 임시 데이터
+  const TodayData = {
+    eatKcal: 0,
+    helkcal: 0,
+    exKcal: 0,
+  };
+
+  //마이페이지 get정보
+  const getMypageInfoLoad = async () => {
+    try {
+      const res = await getMypageInfo();
+      console.log(res);
+      setName(res.name);
+      setGender(res.gender);
+      setAge(res.age);
+      setHeight(res.height);
+      setWeight(res.weight);
+      setBmi(res.bmr);
+      setPic(res.usepic);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getMypageInfoLoad();
+  }, []);
   //화면에 한번만 뿌리기
   useEffect(() => {
     setChartData(dataWeek);
   }, []);
 
+  //오늘 소모,섭취 칼로리
+  const getTodayMinusCalorieLoad = async () => {
+    try {
+      //데이터 들어오면 이거 두개 살리기
+      // const res = await getTodayMinusCalorie();
+      // console.log(res);
+
+      setTodayMinusData(TodayData);
+      setTodayPlusData(TodayData);
+      // console.log(TodayMinusData);
+      // console.log(TodayPlusData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //서버에서 자료가져올때 자료받아올 자리
+  useEffect(() => {
+    getTodayMinusCalorieLoad();
+  }, []);
+
+  console.log(pic);
   // 주간 및 연간 저장 state
   const [showPeriod, setShowPeriod] = useState("주간");
 
@@ -302,11 +364,6 @@ const Main = () => {
     setChartData(dataYear);
   };
 
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [height, setHeight] = useState("");
-  const [wight, setWeight] = useState("");
   // 버튼의 크기 default:middle
   // const [size, setSize] = useState("large");
   const date = new Date();
@@ -315,7 +372,7 @@ const Main = () => {
   const day = String(date.getDate()).padStart(2, "0");
 
   const formatDate = `${year}-${month}-${day}`;
-
+  // console.log(pic);
   return (
     <Total>
       <Logo>
@@ -326,28 +383,35 @@ const Main = () => {
         <div className="privacyTotal">
           <div className="privacyInfo">
             <div className="privacyLeft">
-              <img src="../images/logo.png" alt="사용자 사진" />
+              <img
+                src={`http://192.168.0.144:5006/img/user/1/` + pic}
+                alt="사용자 사진"
+              />
             </div>
             <div className="privacyRight">
               <div>
                 <p>이름:</p>
-                <p>김남수</p>
-              </div>
-              <div>
-                <p>나이:</p>
-                <p>28</p>
+                <p>{name}</p>
               </div>
               <div>
                 <p> 성별:</p>
-                <p>남</p>
+                <p>{gender}</p>
+              </div>
+              <div>
+                <p>나이:</p>
+                <p>{age}</p>
               </div>
               <div>
                 <p> 키:</p>
-                <p>180cm</p>
+                <p>{height}</p>
               </div>
               <div>
                 <p>몸무게:</p>
-                <p>71kg</p>
+                <p>{weight}</p>
+              </div>
+              <div>
+                <p> BMI:</p>
+                <p>{bmi}</p>
               </div>
             </div>
           </div>
@@ -452,11 +516,16 @@ const Main = () => {
         {/* 칼로리 섭취량 */}
         <div className="todayUp">
           <p>현재 섭취 칼로리량</p>
-          <p className="upCalorie">gkdl</p>
+
+          <p className="upCalorie">{TodayData.eatKcal}</p>
+          {/* <p className="upCalorie">{TodayPlusData.eatKcal}</p> */}
+          {/* <p className="upCalorie">업</p> */}
         </div>
         <div className="todayDown">
           <p>현재 소모 칼로리량</p>
-          <p className="downCalorie">gkdl</p>
+          <p className="downCalorie">{TodayData.helkcal}</p>
+          {/* <p className="downCalorie">{TodayMinusData.helkcal}</p> */}
+          {/* <p className="downCalorie">다운</p> */}
         </div>
       </TodayTotal>
     </Total>
