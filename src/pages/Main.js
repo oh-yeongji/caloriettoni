@@ -64,7 +64,6 @@ const dataYear = [
         x: "12월",
         y: 29,
       },
-      
     ],
   },
   {
@@ -293,8 +292,8 @@ const Main = () => {
   const [pic, setPic] = useState("");
 
   //chart Data
+  // const [chartData, setChartData] = useState([]);
   const [chartData, setChartData] = useState([]);
-
   //하루 총 섭취/소비 데이터
   const [TodayPlusData, setTodayPlusData] = useState({});
   const [TodayMinusData, setTodayMinusData] = useState({});
@@ -449,7 +448,6 @@ const Main = () => {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "날짜",
               legendOffset: 36,
               // 가로축 범례 표시 위치
               legendPosition: "middle",
@@ -459,7 +457,6 @@ const Main = () => {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
-              legend: "칼로리",
               legendOffset: -45,
               // 세로축 범례 표시 위치
               legendPosition: "middle",
@@ -474,14 +471,14 @@ const Main = () => {
             useMesh={true}
             legends={[
               {
-                anchor: "top-right",
-                direction: "column",
+                anchor: "top",
+                direction: "row",
                 justify: false,
-                translateX: 100,
-                translateY: 0,
+                translateX: 40,
+                translateY: -38,
                 itemsSpacing: 0,
                 itemDirection: "left-to-right",
-                itemWidth: 80,
+                itemWidth: 90,
                 itemHeight: 20,
                 itemOpacity: 0.75,
                 symbolSize: 12,

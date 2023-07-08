@@ -134,14 +134,6 @@ const Diet = () => {
   const day = String(date.getDate()).padStart(2, "0");
 
   const formatDate = `${year}-${month}-${day}`;
-  // form 관련
-  // const [form] = Form.useForm();
-  //사용자에게 필수입력 필드를 알려줌
-  // const [requiredMark, setRequiredMarkType] = useState("");
-  // const onRequiredTypeChange = ({ requiredMarkValue, intakecalorie }) => {
-  //   setRequiredMarkType(requiredMarkValue);
-  //   setCalorie(calorie);
-  // };
 
   const onFinish = async values => {
     console.log("Success:", values);
@@ -286,15 +278,12 @@ const Diet = () => {
               borderRadius: " 35px 35px 6px 35px",
             }}
           >
-            {/* <div className="receiveCal"> */}
             <Input
               minLength={1}
               maxLength={5}
               placeholder="섭취한 칼로리는??"
               disabled={true}
             />
-            {/* <p>kcal</p> */}
-            {/* </div> */}
           </Form.Item>
 
           {/* 메모 입력 란 */}

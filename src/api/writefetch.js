@@ -2,7 +2,7 @@ import axios from "axios";
 
 //************************운동********************
 
-// 운동카테고리목록 Get 기능
+// 운동카테고리목록+분당칼로리 Get 기능
 export const getHealthCate = async () => {
   try {
     const res = await axios.get("/api/exrec/exlist");
@@ -15,21 +15,31 @@ export const getHealthCate = async () => {
   }
 };
 
-////헬스 분당칼로리 GET기능
-export const getHealthCalorie = async (ihelCate, time) => {
+//헬스 분당칼로리 GET기능 계산하기누를때
+export const getHealthCalorie = async (helName, time) => {
   try {
-    const res = await axios.get(
-      `/api/exrec/subinfo?ihelCate=${ihelCate}&time=${time}`,
-    );
+    const res = await axios.get(`/api/exrec/subinfo?ihelCate=${1}&time=${10}`);
     const result = res.data;
-    // console.log(result);
+    console.log(result);
     return result;
   } catch (err) {
     console.log(err);
   }
 };
 
-//운동 기록
+////헬스 분당칼로리 GET기능 계산하기누를때
+// export const getHealthCalculate = async () => {
+//   try {
+//     const res = await axios.get("/api/exrec/kcalbyex?ihelCate=1");
+//     const result = res.data;
+//     console.log(result);
+//     return result;
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+
+//운동 기록(post)
 export const postHealthRecord = async (ical, uhKcal, ctnt, time) => {
   try {
     const data = {

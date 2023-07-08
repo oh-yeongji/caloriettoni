@@ -12,10 +12,21 @@ import {
   message,
 } from "antd";
 import dayjs from "dayjs";
-import { getHealthCalorie, getHealthCate } from "../api/writefetch";
+import {
+  getHealthCalorie,
+  getHealthCate,
+  postHealthRecord,
+} from "../api/writefetch";
 const { TextArea } = Input;
 import { Logo } from "../style/ListCss";
+import { useNavigate } from "react-router-dom";
 
+const date = new Date();
+const year = date.getFullYear();
+const month = String(date.getMonth() + 1).padStart(2, "0");
+const day = String(date.getDate()).padStart(2, "0");
+
+const formatDate = `${year}-${month}-${day}`;
 // 파일 미리보기
 const filePreview = file =>
   new Promise((resolve, reject) => {
@@ -34,6 +45,7 @@ const normFile = e => {
 const format = "HH:mm";
 
 const Health = () => {
+  const navigator = useNavigate();
   // form 관련
   const [form] = Form.useForm();
   //운동 목록
@@ -66,16 +78,16 @@ const Health = () => {
     exerciseCate();
   }, []);
 
-  //헬스 분당 칼로리 get 기능
 
-  const getHealthCalorieLoad = async (ihelCate, time) => {
+  //헬스 분당칼로리 GET기능 계산하기누를때
+  const getHealthCalorieLoad = async (helName, time) => {
     try {
       const res = await getHealthCalorie();
       console.log(res);
       const data = {
         label: res.helName,
         value: res.helName,
-        h_kcal: res.hkcal,
+        // h_kcal: res.hkcal,
         time: res.time,
       };
 
@@ -89,6 +101,7 @@ const Health = () => {
     getHealthCalorieLoad();
   }, []);
 
+  
   //목록이 바뀌면 실행되는 함수
   const handleChangHealth = value => {
     const exercise = healthData.find(item => item.value === value);
@@ -146,15 +159,14 @@ const Health = () => {
       </div>
     </div>
   );
-  const date = new Date();
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-
-  const formatDate = `${year}-${month}-${day}`;
 
   const handleHealthCalorie = () => {
     console.log("안녕");
+  };
+  const onFinish = async values => {
+    console.log("success", values);
+    const result = await postHealthRecord();
+    navigator("/main");
   };
   return (
     <Total>
@@ -180,6 +192,7 @@ const Health = () => {
         initialValues={{
           minuscalorie,
         }}
+        onFinish={onFinish}
       >
         <Form.Item
           label="Upload"
