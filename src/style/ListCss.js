@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 
 export const ListWrap = styled.div`
-  padding-bottom: 61px;
+  margin-bottom: 15px;
   border: 1px solid lightblue;
   height: 100vh;
   background: #f0f8ff;
+
   h2 {
     display: flex;
     justify-content: center;

@@ -36,6 +36,8 @@ const List = () => {
     data();
   }, [location.pathname]);
 
+  console.log(location.pathname.split("/")[2]);
+
   const handleFoodDeleteClick = _id => {
     const newMealListData = foodList.filter(item => item.imealRecord !== _id);
     setFoodList(newMealListData);
@@ -55,6 +57,7 @@ const List = () => {
       <Logo>
         <img src="../images/logotop.png" alt="logo" />
       </Logo>
+      <h3>{location.pathname.split("/")[2]}</h3>
       <ListDietWrap>
         <h2>식단 일지</h2>
         {foodList && foodList.length > 0 ? (
