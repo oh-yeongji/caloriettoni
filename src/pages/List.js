@@ -27,8 +27,8 @@ const List = () => {
         const foodRes = await getFoodSchedule(location.pathname);
         setFoodList(foodRes);
         const healthRes = await getHealthSchedule(location.pathname);
+        console.log(healthRes);
         setHealthList(healthRes);
-        console.log(location.pathname);
       } catch (err) {
         console.log(err);
       }
@@ -42,12 +42,15 @@ const List = () => {
     deleteFoodList(_id);
   };
 
-  const handleHealthDeleteClick = _id => {
+  const handleHealthDeleteClick = async _id => {
+    console.log(_id);
+    // console.log(_id);
+    await deleteHealthList(_id);
+    // 내부 목록 갱신
     const newHealthListData = healthList.filter(
       item => item.ihelRecord !== _id,
     );
     setHealthList(newHealthListData);
-    deleteHealthList(_id);
   };
 
   return (
@@ -94,8 +97,8 @@ const List = () => {
       <div>
         <h2>운동 일지</h2>
         {healthList && healthList.length > 0 ? (
-          healthList.map((item, ihelRecord) => (
-            <ListHealthWrap key={ihelRecord}>
+          healthList.map(item => (
+            <ListHealthWrap key={item.ihelRecord}>
               <ListHealthPic>
                 <img
                   src={`http://192.168.0.144:5006/img/foodrecord/` + item.uhPic}
@@ -105,6 +108,7 @@ const List = () => {
               <ul>
                 <li>
                   <h3>{item.ihelCate}</h3>
+                  {/* <h3>{item.ihelRecord}</h3> */}
                 </li>
                 <li>
                   <span>운동: {item.helName}</span>
@@ -119,7 +123,9 @@ const List = () => {
                   <p>메모: {item.ctnt}</p>
                 </li>
               </ul>
-              <DeleteButton onClick={handleHealthDeleteClick}>
+              <DeleteButton
+                onClick={() => handleHealthDeleteClick(item.ihelRecord)}
+              >
                 <FontAwesomeIcon icon={faTrashCan} />
               </DeleteButton>
             </ListHealthWrap>

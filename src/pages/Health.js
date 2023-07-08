@@ -20,6 +20,7 @@ import {
 const { TextArea } = Input;
 import { Logo } from "../style/ListCss";
 import { useNavigate } from "react-router-dom";
+import moment from "moment/moment";
 
 const date = new Date();
 const year = date.getFullYear();
@@ -55,20 +56,28 @@ const Health = () => {
   //소비 calorie
   const [minuscalorie, setMinusCalorie] = useState(null);
 
+  const getCateList = () => {
+    getHealthCate();
+  };
+  useEffect(() => {
+    getCateList();
+  }, []);
+
   //운동카테고리목록 Get 기능
   const exerciseCate = async () => {
     try {
       const res = await getHealthCate();
-      // console.log(res);
+      console.log(res);
       const healthList = res.map(item => {
         const data = {
           label: item.helName,
           value: item.helName,
           h_kcal: item.hkcal,
+          ihelCate: item.ihelCate,
         };
         return data;
       });
-      console.log(healthList);
+      // console.log(healthList);
       setHealthData(healthList);
     } catch (err) {
       console.log(err);
@@ -78,47 +87,53 @@ const Health = () => {
     exerciseCate();
   }, []);
 
+  // 운동계산하기 관련 코드
+  const [exercise, setExercise] = useState(0);
+  const [ihelCate, setIhelcate] = useState(null);
+  const handleChangHealth = value => {
+    const exercise = healthData.find(item => item.value === value);
+    setExercise(exercise);
+    setIhelcate(exercise.ihelCate);
+    const h_kcal = exercise.h_kcal;
+    // console.log(h_kcal);
+    setMinusCalorie(h_kcal);
+    // Form 컴포넌트의 initialValues를 h_kcal로 업데이트
+    form.setFieldsValue({ minuscalorie: h_kcal });
+    // console.log(exercise);
+  };
+
+  const [healthHour, setHealthHour] = useState(0);
+  const handleChangTime = (time, timeString) => {
+    const selectedTime = time ? time.format("HH:mm") : "";
+    const hour = time ? time.hour() : "";
+    const minutes = time ? time.minute() : "";
+    const allTime = hour * 60 + minutes;
+    setHealthHour(allTime);
+  };
+
+  const handleHealthCalorie = () => {
+    getHealthCalorieLoad(exercise.ihelCate, healthHour);
+  };
 
   //헬스 분당칼로리 GET기능 계산하기누를때
+  const [execName, setExecName] = useState("");
+  const [execKal, setExecKal] = useState(0);
+  const [execTime, setExecTime] = useState("");
+  const [execTotal, setExecTotal] = useState(0);
+
   const getHealthCalorieLoad = async (helName, time) => {
     try {
-      const res = await getHealthCalorie();
-      console.log(res);
-      const data = {
-        label: res.helName,
-        value: res.helName,
-        // h_kcal: res.hkcal,
-        time: res.time,
-      };
-
-      console.log(data);
+      const res = await getHealthCalorie(helName, time);
+      // console.log("칼로리 계산 받아온 데이터 : ", res);
+      setExecName(res.helName);
+      setExecKal(res.hkcal);
+      setExecTime(res.time);
+      setExecTotal(res.totalHelKcal);
     } catch (err) {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    getHealthCalorieLoad();
-  }, []);
-
-  
-  //목록이 바뀌면 실행되는 함수
-  const handleChangHealth = value => {
-    const exercise = healthData.find(item => item.value === value);
-    console.log(exercise);
-    const h_kcal = exercise.h_kcal;
-    console.log(h_kcal);
-    setMinusCalorie(h_kcal);
-    // Form 컴포넌트의 initialValues를 h_kcal로 업데이트
-    form.setFieldsValue({ minuscalorie: h_kcal });
-  };
-
-  const getCateList = () => {
-    getHealthCate();
-  };
-  useEffect(() => {
-    getCateList();
-  }, []);
+  // END ========================== 운동계산하기
 
   // Modal 창 활성화 여부
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -159,14 +174,28 @@ const Health = () => {
       </div>
     </div>
   );
-
-  const handleHealthCalorie = () => {
-    console.log("안녕");
-  };
   const onFinish = async values => {
-    console.log("success", values);
-    const result = await postHealthRecord();
-    navigator("/main");
+    // console.log("success", values);
+    const dto = {
+      iuser: 1,
+      recDate: moment(Date.now()).format("YYYY-MM-DD"),
+      ihelCate: ihelCate,
+      ctnt: values.memo,
+      time: healthHour,
+    };
+    console.log(dto);
+    // 이미지 업로드
+    const formData = new FormData();
+    formData.append("uhPic ", fileList[0]?.originFileObj);
+    // formData.append("dto", JSON.stringify(dto));
+    formData.append(
+      "dto", //data pk명
+      new Blob([JSON.stringify(dto)], {
+        type: "application/json",
+      }),
+    );
+    const result = await postHealthRecord(formData);
+    // navigator("/main");
   };
   return (
     <Total>
@@ -286,25 +315,26 @@ const Health = () => {
             // defaultValue={dayjs("00:00", format)}
             format={format}
             showNow={false}
+            onChange={handleChangTime}
           />
         </Form.Item>
         <div className="healthInfo">
           <button onClick={handleHealthCalorie}>계산하기</button>
           <div className="e_name">
             <p>운동 :</p>
-            <p>dddsfsddd</p>
+            <p>{execName}</p>
           </div>
           <div className="m_kcal">
             <p>분당kcal :</p>
-            <p>ddddfsdfd</p>
+            <p>{execKal}</p>
           </div>
           <div className="e_period">
             <p> 운동시간 :</p>
-            <p>ddddfsdf</p>
+            <p>{execTime}</p>
           </div>
           <div className="total_e_kcal">
             <p> 총 소모칼로리 :</p>
-            <p>ddddfvsdf</p>
+            <p>{execTotal}</p>
           </div>
         </div>
         {/* 메모 입력 란 */}

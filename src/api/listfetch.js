@@ -14,9 +14,10 @@ export const deleteFoodList = async _id => {
 
 export const deleteHealthList = async _id => {
   try {
-    const res = await axios.delete(`/api/list/1/hel`);
+    const res = await axios.delete(`/api/list/${_id}/hel`);
     const result = res.data;
     console.log(result);
+    return result;
   } catch (error) {
     console.log(error);
   }

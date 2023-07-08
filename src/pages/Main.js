@@ -7,7 +7,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ResponsiveLine } from "@nivo/line";
 import { Total, Mypage, GraphTotal, TodayTotal, Logo } from "../style/MainCss";
-import { getMypageInfo, getTodayMinusCalorie } from "../api/mainfetch";
+import {
+  getHealthGraph,
+  getMypageInfo,
+  getTodayMinusCalorie,
+} from "../api/mainfetch";
 // 서버에서 가지고 오는 샘플 데이터
 // 연간 데이터
 const dataYear = [
@@ -183,31 +187,31 @@ const dataWeek = [
 
     data: [
       {
-        x: "월",
+        x: "6/1",
         y: 20,
       },
       {
-        x: "화",
+        x: "6/2",
         y: 30,
       },
       {
-        x: "수",
+        x: "6/3",
         y: 43,
       },
       {
-        x: "목",
+        x: "6/4",
         y: 139,
       },
       {
-        x: "금",
+        x: "6/5",
         y: 73,
       },
       {
-        x: "토",
+        x: "6/6",
         y: 135,
       },
       {
-        x: "일",
+        x: "6/7",
         y: 23,
       },
     ],
@@ -217,31 +221,31 @@ const dataWeek = [
     color: "hsl(242, 70%, 50%)",
     data: [
       {
-        x: "월",
+        x: "6/1",
         y: 0,
       },
       {
-        x: "화",
+        x: "6/2",
         y: 30,
       },
       {
-        x: "수",
+        x: "6/3",
         y: 43,
       },
       {
-        x: "목",
+        x: "6/4",
         y: 139,
       },
       {
-        x: "금",
+        x: "6/5",
         y: 73,
       },
       {
-        x: "토",
+        x: "6/6",
         y: 135,
       },
       {
-        x: "일",
+        x: "6/7",
         y: 23,
       },
     ],
@@ -251,31 +255,31 @@ const dataWeek = [
     color: "hsl(124, 70%, 50%)",
     data: [
       {
-        x: "월",
+        x: "6/1",
         y: 0,
       },
       {
-        x: "화",
+        x: "6/2",
         y: 30,
       },
       {
-        x: "수",
+        x: "6/3",
         y: 43,
       },
       {
-        x: "목",
+        x: "6/4",
         y: 139,
       },
       {
-        x: "금",
+        x: "6/5",
         y: 73,
       },
       {
-        x: "토",
+        x: "6/6",
         y: 135,
       },
       {
-        x: "일",
+        x: "6/7",
         y: 23,
       },
     ],
@@ -292,8 +296,7 @@ const Main = () => {
   const [pic, setPic] = useState("");
 
   //chart Data
-  // const [chartData, setChartData] = useState([]);
-  const [chartData, setChartData] = useState([]);
+  const [chartData, setChartData] = useState({});
   //하루 총 섭취/소비 데이터
   const [TodayPlusData, setTodayPlusData] = useState({});
   const [TodayMinusData, setTodayMinusData] = useState({});
@@ -329,6 +332,22 @@ const Main = () => {
     setChartData(dataWeek);
   }, []);
 
+  //Graph get기능
+  const getHealthGraphLoad = async () => {
+    try {
+      console.log("가져와");
+      const res = await getHealthGraph();
+      // setChartData(dataWeek);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getHealthGraphLoad();
+  }, []);
+
   //오늘 소모,섭취 칼로리
   const getTodayMinusCalorieLoad = async () => {
     try {
@@ -352,14 +371,14 @@ const Main = () => {
 
   console.log(pic);
   // 주간 및 연간 저장 state
-  const [showPeriod, setShowPeriod] = useState("주간");
+  const [showPeriod, setShowPeriod] = useState("");
 
   const handleDate = () => {
-    setShowPeriod("주간");
+    // setShowPeriod("주간");
     setChartData(dataWeek);
   };
   const handleYear = () => {
-    setShowPeriod("연간");
+    // setShowPeriod("연간");
     setChartData(dataYear);
   };
 
@@ -457,6 +476,7 @@ const Main = () => {
               tickSize: 5,
               tickPadding: 5,
               tickRotation: 0,
+              tickValues: [-200, -400, -600, 200, 400, 600],
               legendOffset: -45,
               // 세로축 범례 표시 위치
               legendPosition: "middle",
@@ -498,13 +518,15 @@ const Main = () => {
           />
         </div>
         <div className="btns">
-          <div className="left">
+          <div className="left" onClick={handleDate}>
+            이번주
             {/* <FontAwesomeIcon icon={faChevronLeft} onClick={hi} /> <h2>{week==="주간"?주간을 보여주고:아니면 연간을 보여줘라}주간</h2> */}
-            <FontAwesomeIcon icon={faChevronLeft} onClick={handleDate} />
+            {/* <FontAwesomeIcon icon={faChevronLeft} onClick={handleDate} /> */}
           </div>
           <p>{showPeriod}</p>
-          <div className="right">
-            <FontAwesomeIcon icon={faChevronRight} onClick={handleYear} />
+          <div className="right" onClick={handleYear}>
+            다음주
+            {/* <FontAwesomeIcon icon={faChevronRight} onClick={handleYear} /> */}
           </div>
         </div>
       </GraphTotal>

@@ -18,9 +18,11 @@ export const getHealthCate = async () => {
 //헬스 분당칼로리 GET기능 계산하기누를때
 export const getHealthCalorie = async (helName, time) => {
   try {
-    const res = await axios.get(`/api/exrec/subinfo?ihelCate=${1}&time=${10}`);
+    const res = await axios.get(
+      `/api/exrec/subinfo?ihelCate=${helName}&time=${time}`,
+    );
     const result = res.data;
-    console.log(result);
+    console.log("결과", result);
     return result;
   } catch (err) {
     console.log(err);
@@ -40,20 +42,20 @@ export const getHealthCalorie = async (helName, time) => {
 // };
 
 //운동 기록(post)
-export const postHealthRecord = async (ical, uhKcal, ctnt, time) => {
+export const postHealthRecord = async _data => {
   try {
-    const data = {
-      ical: ical,
-      uhKcal: uhKcal,
-      ctnt: ctnt,
-      time: time,
-    };
-    const res = await axios.get("/api/exrec", data);
-    const result = res.data;
-    return result;
+    const res = await axios.post("/api/exrec", _data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    // const res = await axios.post("http://localhost:3000/todos");
+    const data = res.data;
+    console.log(data);
+    return data;
   } catch (err) {
     console.log(err);
-    return 0;
+    return {};
   }
 };
 //*******************식단**************************
