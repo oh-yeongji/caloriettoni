@@ -46,3 +46,16 @@ export const patchScheduleTextData = async (iuser, editScheduleText) => {
     console.log(error);
   }
 };
+
+// 달력 기록 리스트 get
+
+export const getScheduleList = async yearMonth => {
+  try {
+    const res = await axios.get(`/api/calender/1?yearMonth=${yearMonth}`);
+    const result = res.data;
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};

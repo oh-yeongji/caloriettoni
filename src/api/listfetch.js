@@ -1,9 +1,10 @@
 import axios from "axios";
 
 // List Delete 기능
+
 export const deleteFoodList = async _id => {
   try {
-    const res = await axios.delete(`/api${location.pathname}/food`);
+    const res = await axios.delete(`/api/list/1/meal`);
     const result = res.data;
     console.log(result);
   } catch (error) {
@@ -13,7 +14,7 @@ export const deleteFoodList = async _id => {
 
 export const deleteHealthList = async _id => {
   try {
-    const res = await axios.delete(`/api${location.pathname}/hel`);
+    const res = await axios.delete(`/api/list/1/hel`);
     const result = res.data;
     console.log(result);
   } catch (error) {
