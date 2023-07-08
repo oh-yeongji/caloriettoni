@@ -53,6 +53,10 @@ export const ListDietPic = styled.div`
   border: 1px solid lightgray;
   border-radius: 10px;
   margin: 0 12px 0 10px;
+  img {
+    height: 130px;
+    width: 120px;
+  }
 `;
 
 export const ListHealthWrap = styled.div`
@@ -83,6 +87,11 @@ export const ListHealthPic = styled.div`
   border: 1px solid lightgray;
   border-radius: 10px;
   margin: 0 12px 0 10px;
+
+  img {
+    height: 130px;
+    width: 120px;
+  }
 `;
 
 export const DeleteButton = styled.button`
@@ -91,10 +100,10 @@ export const DeleteButton = styled.button`
   right: 1%;
   width: 25px;
   height: 25px;
-  background: white;
+  background: #f0f8ff;
   border: none;
   border-radius: 7px;
-  font-size: 18px;
+  font-size: 20px;
   color: lightblue;
   cursor: pointer;
 `;
