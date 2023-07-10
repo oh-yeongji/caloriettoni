@@ -7,10 +7,14 @@ export const ScheduleForm = styled.div`
     width: 90%;
     background: white;
     border-radius: 13px;
+    margin: 0 auto;
     textarea {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       border-radius: 13px;
-      padding: 15px;
-      width: 75%;
+      padding: 15px 50px;
+      width: 100%;
       height: 100px;
       border: none;
       resize: none;

@@ -11,6 +11,7 @@ import {
   DeleteButton,
   Logo,
   ListDietContain,
+  ListHealthContain,
 } from "../style/ListCss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
@@ -36,16 +37,16 @@ const List = () => {
     data();
   }, [location.pathname]);
 
-  console.log(location.pathname.split("/")[2]);
+  // console.log(location.pathname.split("/")[2]);
 
-  const handleFoodDeleteClick = _id => {
+  const handleFoodDeleteClick = async _id => {
+    console.log(_id);
+    await deleteFoodList(_id);
     const newMealListData = foodList.filter(item => item.imealRecord !== _id);
     setFoodList(newMealListData);
-    deleteFoodList(_id);
   };
 
   const handleHealthDeleteClick = async _id => {
-    console.log(_id);
     // console.log(_id);
     await deleteHealthList(_id);
     // 내부 목록 갱신
@@ -76,43 +77,45 @@ const List = () => {
               </ListDietPic>
               <ul>
                 <li>
-                  <h3>{item.uef_time}</h3>
+                  <span>{item.uefTime}</span>
                 </li>
                 <li>
                   <span>식단: {item.foodName}</span>
                 </li>
                 <li>
-                  <span>칼로리:{item.uefKcal}</span>
+                  <span>칼로리: {item.uefKcal}Kcal</span>
                 </li>
-                <li>
-                  <p>메모: {item.ctntF}</p>
+                <li style={{ display: "flex" }}>
+                  <span>메모: </span>
+                  <span style={{ paddingLeft: "5px" }}>{item.ctntF}</span>
                 </li>
               </ul>
-              <DeleteButton onClick={handleFoodDeleteClick}>
+              <DeleteButton
+                onClick={() => handleFoodDeleteClick(item.imealRecord)}
+              >
                 <FontAwesomeIcon icon={faTrashCan} />
               </DeleteButton>
             </ListDietContain>
           ))
         ) : (
-          <p>해당 날짜에 기록이 없습니다.</p>
+          <span>해당 날짜에 기록이 없습니다.</span>
         )}
       </ListDietWrap>
-      <div>
+      <ListHealthWrap>
         <h2>운동 일지</h2>
         {healthList && healthList.length > 0 ? (
           healthList.map(item => (
-            <ListHealthWrap key={item.ihelRecord}>
+            <ListHealthContain key={item.ihelRecord}>
               <ListHealthPic>
                 <img
-                  src={`http://192.168.0.144:5006/img/foodrecord/` + item.uhPic}
+                  src={`http://192.168.0.144:5006/img/helrecord/` + item.uhPic}
                   alt="healthcate"
                 />
               </ListHealthPic>
               <ul>
-                <li>
+                {/* <li>
                   <h3>{item.ihelCate}</h3>
-                  {/* <h3>{item.ihelRecord}</h3> */}
-                </li>
+                </li> */}
                 <li>
                   <span>운동: {item.helName}</span>
                 </li>
@@ -122,8 +125,9 @@ const List = () => {
                 <li>
                   <span>소모 칼로리: {item.uhKcal}kcal</span>
                 </li>
-                <li>
-                  <p>메모: {item.ctnt}</p>
+                <li style={{ display: "flex" }}>
+                  <span>메모:</span>
+                  <span style={{ paddingLeft: "5px" }}>{item.ctnt}</span>
                 </li>
               </ul>
               <DeleteButton
@@ -131,12 +135,12 @@ const List = () => {
               >
                 <FontAwesomeIcon icon={faTrashCan} />
               </DeleteButton>
-            </ListHealthWrap>
+            </ListHealthContain>
           ))
         ) : (
-          <p>해당 날짜에 기록이 없습니다.</p>
+          <span>해당 날짜에 기록이 없습니다.</span>
         )}
-      </div>
+      </ListHealthWrap>
     </ListWrap>
   );
 };
