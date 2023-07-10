@@ -100,8 +100,6 @@ const Diet = () => {
   // 업로드할 이미지 목록 관리
   const [fileList, setFileList] = useState([]);
 
-
-
   // upload 컴포넌트에서 처리
   const handlePreview = async file => {
     if (!file.url && !file.preview) {
@@ -114,9 +112,6 @@ const Diet = () => {
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
     );
   };
-
-
-
 
   // upload 컴포넌트에서 처리
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
@@ -288,7 +283,7 @@ const Diet = () => {
               minLength={1}
               maxLength={5}
               placeholder="섭취한 칼로리는??"
-              disabled
+              disabled={true}
             />
           </Form.Item>
 

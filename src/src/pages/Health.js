@@ -297,7 +297,7 @@ const Health = () => {
             minLength={1}
             maxLength={5}
             placeholder="분당 소모 칼로리는??"
-            disabled
+            disabled={true}
             style={{ width: "180px" }}
           />
         </Form.Item>

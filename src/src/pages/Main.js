@@ -500,7 +500,7 @@ const Main = () => {
               type: "linear",
               min: "-10000",
               max: "10000",
-              stacked: false, //누적? 수정시 false엿음
+              stacked: false,
               reverse: false,
             }}
             // yFormat=" >-.2f"
