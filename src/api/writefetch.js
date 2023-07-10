@@ -63,16 +63,13 @@ export const getDietCalorie = async () => {
 
 //식단 post 기능
 export const postDietRecord = async (_formData, _data) => {
+  // console.log(
+  //   `/api/foodrecord?ifood=${_data.ifood}&iuser=${_data.iuser}&resDate=${_data.recDate}&uefTime=${_data.uefTime}&ctnt=${_data.ctnt}`,
+  // );
   try {
-    console.log(
-      `/api/foodrecord/img?iuser=${_data.iuser}&ifood=${
-        _data.ifood
-      }&ical=${1}&uefTime=${_data.uefTime}&ctnt=${_data.ctnt}`,
-    );
     const res = await axios.post(
-      `/api/foodrecord/img?iuser=${_data.iuser}&ifood=${
-        _data.ifood
-      }&ical=${1}&uefTime=${_data.uefTime}&ctnt=${_data.ctnt}`,
+      // `/api/foodrecord?ifood=${_data.ifood}&iuser=${_data.iuser}&resDate=${_data.recDate}&uefTime=${_data.uefTime}&ctnt=${_data.ctnt}`
+      "api/foodrecord",
       _formData,
       {
         headers: {

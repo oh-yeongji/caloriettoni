@@ -10,6 +10,15 @@ import {
   postDietRecordIuser,
 } from "../api/writefetch";
 import { useNavigate } from "react-router-dom";
+import moment from "moment/moment";
+
+//사진 파일 선택
+const normFile = e => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e?.fileList;
+};
 
 //사진 파일 미리보기
 const filePreview = file =>
@@ -19,14 +28,6 @@ const filePreview = file =>
     reader.onload = () => resolve(reader.result);
     reader.onerror = error => reject(error);
   });
-
-//사진 파일 선택
-const normFile = e => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
 
 const Diet = () => {
   const navigator = useNavigate();
@@ -100,8 +101,6 @@ const Diet = () => {
   // 업로드할 이미지 목록 관리
   const [fileList, setFileList] = useState([]);
 
-
-
   // upload 컴포넌트에서 처리
   const handlePreview = async file => {
     if (!file.url && !file.preview) {
@@ -114,9 +113,6 @@ const Diet = () => {
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
     );
   };
-
-
-
 
   // upload 컴포넌트에서 처리
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
@@ -152,11 +148,12 @@ const Diet = () => {
     // );
 
     const dto = {
-      ifood: values.foodselect,
       iuser: 1,
+      recDate: moment(Date.now()).format("YYYY-MM-DD"),
+      ifood: values.foodselect,
       uefTime: parseInt(values.mealtime),
-      ctnt: values.memo,
-      ical: values.intakeCalorie,
+      ctnt: values.intakememo,
+      // ical: values.intakeCalorie,
     };
     console.log("dto : ", dto);
 
@@ -164,6 +161,12 @@ const Diet = () => {
     // 이미지 포함 전송
     const formData = new FormData();
     formData.append("img ", fileList[0]?.originFileObj);
+    formData.append(
+      "dto", //data pk명
+      new Blob([JSON.stringify(dto)], {
+        type: "application/json",
+      }),
+    );
     const result = await postDietRecord(formData, dto);
 
     //작성을 다하고 제출하면 메인으로 이동해라.
@@ -217,6 +220,7 @@ const Diet = () => {
               onChange={handleChange}
             >
               {fileList.length >= 1 ? null : uploadButton}
+              
             </Upload>
           </Form.Item>
 
