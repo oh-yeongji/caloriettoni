@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import Intro from "./pages/Intro";
 import Main from "./pages/Main";
@@ -9,8 +9,23 @@ import NotFound from "./pages/NotFound";
 import Schedule from "./pages/Schedule";
 import List from "./pages/List";
 import Footer from "./components/Footer";
+import { useEffect } from "react";
 
 function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const hideFooterOnIntro = location.pathname === "/";
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      const timeoutId = setTimeout(() => {
+        navigate("/main");
+      }, 2000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [location.pathname, navigate]);
+
   return (
     <div className="wrap">
       <Routes>
@@ -23,7 +38,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />}></Route>
         <Route path="/notfound" element={<NotFound />}></Route>
       </Routes>
-      <Footer />
+      {!hideFooterOnIntro && <Footer />}
     </div>
   );
 }

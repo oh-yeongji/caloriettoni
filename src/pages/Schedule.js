@@ -58,24 +58,26 @@ const Schedule = () => {
           setScheduleText={setScheduleText}
         />
       </div>
-      <CalendarMain
-        ref={calRef}
-        onChange={onChange}
-        onActiveStartDateChange={handleMonthChange}
-        value={value}
-        calendarType="US"
-        formatDay={(locale, date) => moment(date).format("D")}
-        onClickDay={date => handleDateClick(date)}
-        tileClassName={({ date, view }) => {
-          if (
-            scheduleDate.find(
-              item => item.createdAt === moment(date).format("YYYY-MM-DD"),
-            )
-          ) {
-            return "highlight";
-          }
-        }}
-      />
+      <div>
+        <CalendarMain
+          ref={calRef}
+          onChange={onChange}
+          onActiveStartDateChange={handleMonthChange}
+          value={value}
+          calendarType="US"
+          formatDay={(locale, date) => moment(date).format("D")}
+          onClickDay={date => handleDateClick(date)}
+          tileClassName={({ date, view }) => {
+            if (
+              scheduleDate.find(
+                item => item.createdAt === moment(date).format("YYYY-MM-DD"),
+              )
+            ) {
+              return "highlight";
+            }
+          }}
+        />
+      </div>
     </CalendarWrap>
   );
 };

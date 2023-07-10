@@ -39,7 +39,7 @@ const ScheduleItem = ({ item, scheduleText, setScheduleText }) => {
             type="text"
             defaultValue={item.goal}
             onChange={e => handleEditChange(e)}
-            maxLength="84"
+            maxLength="95"
           />
           <button onClick={() => handleSaveClick(item.iuser)}>
             <FontAwesomeIcon icon={faPenToSquare} />
@@ -56,7 +56,7 @@ const ScheduleItem = ({ item, scheduleText, setScheduleText }) => {
             value={item.goal}
             placeholder="본인의 목표를 설정하고 실천해보세요"
             disabled
-            maxLength="84"
+            maxLength="95"
           ></textarea>
           <button onClick={handleEditClick}>
             <FontAwesomeIcon icon={faPenToSquare} />

@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap");
 
 * {
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
   outline-style: none;
@@ -29,4 +29,5 @@ body {
   line-height: 1.4;
   letter-spacing: -0.3px;
   word-break: keep-all;
+  background: #f3f3f5;
 }

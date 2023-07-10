@@ -4,9 +4,10 @@ import axios from "axios";
 
 export const deleteFoodList = async _id => {
   try {
-    const res = await axios.delete(`/api/list/1/meal`);
+    const res = await axios.delete(`/api/list/${_id}/meal`);
     const result = res.data;
     console.log(result);
+    return result;
   } catch (error) {
     console.log(error);
   }
