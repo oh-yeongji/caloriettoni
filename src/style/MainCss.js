@@ -41,6 +41,7 @@ export const Mypage = styled.div`
       display: flex;
       padding-top: 32px;
       padding-right: 53px;
+      margin-left: 45px;
       .privacyLeft {
         img {
           width: 150px;
@@ -51,6 +52,7 @@ export const Mypage = styled.div`
         }
       }
       .privacyRight {
+        margin-left: 39px;
         div {
           display: flex;
         }
@@ -83,7 +85,7 @@ export const GraphTotal = styled.div`
       margin-left: 47px;
     }
     .right {
-      margin-right: 106px;
+      margin-left: 129px;
     }
   }
 `;
@@ -100,16 +102,20 @@ export const TodayTotal = styled.div`
     display: flex;
     flex-direction: column;
     margin-top: 30px;
+    margin-left: 48px;
     .upCalorie {
       margin-top: 10px;
+      margin-left: 36px;
     }
   }
   .todayDown {
     display: flex;
     flex-direction: column;
     margin-top: 30px;
+    margin-left: 65px;
     .downCalorie {
       margin-top: 10px;
+      margin-left: 40px;
     }
   }
 `;

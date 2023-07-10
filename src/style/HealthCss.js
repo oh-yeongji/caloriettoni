@@ -13,7 +13,15 @@ export const Total = styled.div`
   Form > div {
     margin-bottom: 20px;
   }
-
+  .css-dev-only-do-not-override-12upa3x {
+    margin-left: 9px;
+  }
+  .ant-upload-wrapper .ant-upload-list {
+    margin-left: 32px;
+  }
+  .ant-form-item .ant-form-item-control-input-content {
+    margin-left: 23px;
+  }
   .ant-upload-wrapper.ant-upload-picture-card-wrapper
     .ant-upload.ant-upload-select
     > .ant-upload {
@@ -21,15 +29,19 @@ export const Total = styled.div`
     border-radius: 5px;
   }
 
+  .ant-select-selector {
+    margin-left: 19px;
+  }
+
   .ant-form-item .ant-form-item-label {
     overflow: visible;
-    margin-left: "31px";
+
     & > div {
       margin-left: 18px;
     }
   }
   .ant-input[disabled] {
-    margin-left: 44px;
+    margin-left: 61px;
   }
   .healthInfo {
     display: flex;
@@ -38,6 +50,7 @@ export const Total = styled.div`
     border-radius: 35px 35px 35px 6px;
     padding-top: 10px;
     padding-bottom: 10px;
+    align-items: center;
     button {
       width: 100px;
       background: gray;
