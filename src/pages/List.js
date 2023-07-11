@@ -28,7 +28,7 @@ const List = () => {
         const foodRes = await getFoodSchedule(location.pathname);
         setFoodList(foodRes);
         const healthRes = await getHealthSchedule(location.pathname);
-        console.log(healthRes);
+        // console.log(healthRes);
         setHealthList(healthRes);
       } catch (err) {
         console.log(err);
@@ -36,8 +36,6 @@ const List = () => {
     };
     data();
   }, [location.pathname]);
-
-  // console.log(location.pathname.split("/")[2]);
 
   const handleFoodDeleteClick = async _id => {
     console.log(_id);
@@ -47,7 +45,6 @@ const List = () => {
   };
 
   const handleHealthDeleteClick = async _id => {
-    // console.log(_id);
     await deleteHealthList(_id);
     // 내부 목록 갱신
     const newHealthListData = healthList.filter(
@@ -113,9 +110,6 @@ const List = () => {
                 />
               </ListHealthPic>
               <ul>
-                {/* <li>
-                  <h3>{item.ihelCate}</h3>
-                </li> */}
                 <li>
                   <span>운동: {item.helName}</span>
                 </li>
