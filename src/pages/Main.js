@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "antd";
-import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ResponsiveLine } from "@nivo/line";
 import { Total, Mypage, GraphTotal, TodayTotal, Logo } from "../style/MainCss";
@@ -14,278 +11,7 @@ import {
 } from "../api/mainfetch";
 import moment from "moment";
 // 서버에서 가지고 오는 샘플 데이터
-// 연간 데이터
-const dataYear = [
-  {
-    id: "섭취칼로리량",
-    color: "hsl(268, 70%, 50%)",
 
-    data: [
-      {
-        x: "1월",
-        y: 0,
-      },
-      {
-        x: "2월",
-        y: 43,
-      },
-      {
-        x: "3월",
-        y: 139,
-      },
-      {
-        x: "4월",
-        y: 73,
-      },
-      {
-        x: "5월",
-        y: 135,
-      },
-      {
-        x: "6월",
-        y: 23,
-      },
-      {
-        x: "7월",
-        y: 31,
-      },
-      {
-        x: "8월",
-        y: 39,
-      },
-      {
-        x: "9월",
-        y: 59,
-      },
-      {
-        x: "10월",
-        y: 279,
-      },
-      {
-        x: "11월",
-        y: 79,
-      },
-      {
-        x: "12월",
-        y: 29,
-      },
-    ],
-  },
-  {
-    id: "소모칼로리량",
-    color: "hsl(242, 70%, 50%)",
-    data: [
-      {
-        x: "1월",
-        y: 59,
-      },
-      {
-        x: "2월",
-        y: 19,
-      },
-      {
-        x: "3월",
-        y: 29,
-      },
-      {
-        x: "4월",
-        y: 49,
-      },
-      {
-        x: "5월",
-        y: 9,
-      },
-      {
-        x: "6월",
-        y: 93,
-      },
-      {
-        x: "7월",
-        y: 21,
-      },
-      {
-        x: "8월",
-        y: 56,
-      },
-      {
-        x: "9월",
-        y: 14,
-      },
-      {
-        x: "10월",
-        y: 24,
-      },
-      {
-        x: "11월",
-        y: 32,
-      },
-      {
-        x: "12월",
-        y: 21,
-      },
-    ],
-  },
-  {
-    id: "잔여칼로리량",
-    color: "hsl(124, 70%, 50%)",
-    data: [
-      {
-        x: "1월",
-        y: 81,
-      },
-      {
-        x: "2월",
-        y: 36,
-      },
-      {
-        x: "3월",
-        y: 54,
-      },
-      {
-        x: "4월",
-        y: 49,
-      },
-      {
-        x: "5월",
-        y: 56,
-      },
-      {
-        x: "6월",
-        y: 10,
-      },
-      {
-        x: "7월",
-        y: 21,
-      },
-      {
-        x: "8월",
-        y: 15,
-      },
-      {
-        x: "9월",
-        y: 110,
-      },
-      {
-        x: "10월",
-        y: 105,
-      },
-      {
-        x: "11월",
-        y: 132,
-      },
-      {
-        x: "12월",
-        y: 11,
-      },
-    ],
-  },
-];
-// 주간 데이터
-const dataWeek = [
-  {
-    id: "섭취칼로리량",
-    color: "hsl(268, 70%, 50%)",
-
-    data: [
-      {
-        x: "6/1",
-        y: 20,
-      },
-      {
-        x: "6/2",
-        y: 30,
-      },
-      {
-        x: "6/3",
-        y: 43,
-      },
-      {
-        x: "6/4",
-        y: 139,
-      },
-      {
-        x: "6/5",
-        y: 73,
-      },
-      {
-        x: "6/6",
-        y: 135,
-      },
-      {
-        x: "6/7",
-        y: 23,
-      },
-    ],
-  },
-  {
-    id: "소모칼로리량",
-    color: "hsl(242, 70%, 50%)",
-    data: [
-      {
-        x: "6/1",
-        y: 0,
-      },
-      {
-        x: "6/2",
-        y: 30,
-      },
-      {
-        x: "6/3",
-        y: 43,
-      },
-      {
-        x: "6/4",
-        y: 139,
-      },
-      {
-        x: "6/5",
-        y: 73,
-      },
-      {
-        x: "6/6",
-        y: 135,
-      },
-      {
-        x: "6/7",
-        y: 23,
-      },
-    ],
-  },
-  {
-    id: "잔여칼로리량",
-    color: "hsl(124, 70%, 50%)",
-    data: [
-      {
-        x: "6/1",
-        y: 0,
-      },
-      {
-        x: "6/2",
-        y: 30,
-      },
-      {
-        x: "6/3",
-        y: 43,
-      },
-      {
-        x: "6/4",
-        y: 139,
-      },
-      {
-        x: "6/5",
-        y: 73,
-      },
-      {
-        x: "6/6",
-        y: 135,
-      },
-      {
-        x: "6/7",
-        y: 23,
-      },
-    ],
-  },
-];
 const Main = () => {
   //mypage info
   const [name, setName] = useState("");
@@ -301,13 +27,6 @@ const Main = () => {
   //하루 총 섭취/소비 데이터
   const [todayPlusData, setTodayPlusData] = useState(0);
   const [todayMinusData, setTodayMinusData] = useState(0);
-
-  // 하루 총 섭취/소비 임시 데이터
-  // const TodayData = {
-  //   eatKcal: 0,
-  //   helkcal: 0,
-  //   exKcal: 0,
-  // };
 
   //마이페이지 get정보
   const getMypageInfoLoad = async () => {
@@ -328,13 +47,6 @@ const Main = () => {
   useEffect(() => {
     getMypageInfoLoad();
   }, []);
-  //화면에 한번만 뿌리기
-  useEffect(() => {
-    setChartData(dataWeek);
-  }, []);
-
-  //Graph get기능
-  // 이번주 날짜 구하기
 
   // 차트 출력 데이터 저장하기
   const [stDay, setStDay] = useState(0);
@@ -390,6 +102,7 @@ const Main = () => {
     }
   };
 
+  //화면에 뿌리기
   useEffect(() => {
     getStartAndEndOfWeek(0);
   }, []);
@@ -581,7 +294,6 @@ const Main = () => {
             style={{ cursor: "pointer" }}
           >
             이번주
-            {/* <FontAwesomeIcon icon={faChevronRight}/> */}
           </div>
         </div>
       </GraphTotal>

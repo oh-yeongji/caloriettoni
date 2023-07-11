@@ -215,7 +215,6 @@ const Health = () => {
         }}
         style={{
           maxWidth: 500,
-          // background: "   #dcdcdc",
           margin: "0 50px",
         }}
         form={form}
@@ -232,7 +231,7 @@ const Health = () => {
           rules={[{ required: true, message: "이미지를 업로드 해주세요!" }]}
           name="healthupload"
           style={{
-            background: "rgb(13,133,254)",
+            background: "#6495ED",
             border: "1.8px solid #e6e6fa",
             borderRadius: " 35px 35px  35px 6px",
             padding: "20px",
@@ -308,7 +307,7 @@ const Health = () => {
           name="healthtime"
           rules={[{ required: true, message: "운동한 시간을 선택해주세요!" }]}
           style={{
-            background: "rgb(13,133,254)",
+            background: "#6495ED",
             borderRadius: " 35px 35px  6px 35px",
             padding: "20px",
           }}
@@ -346,7 +345,7 @@ const Health = () => {
           label="메모"
           name="memo"
           style={{
-            background: "rgb(13,133,254)",
+            background: "#6495ED",
             borderRadius: " 35px 35px  6px 35px",
             padding: "20px",
           }}
@@ -364,11 +363,22 @@ const Health = () => {
           <Button
             type="primary"
             htmlType="submit"
-            style={{ backgroundColor: "rgb(13,133,254)" }}
+            style={{
+              backgroundColor: "rgb(13,133,254)",
+              position: "relative",
+              left: "70px",
+            }}
           >
             Save
           </Button>
-          <Button>Cancel</Button>
+          <Button
+            style={{
+              position: "relative",
+              left: "70px",
+            }}
+          >
+            Cancel
+          </Button>
         </Form.Item>
       </Form>
     </Total>

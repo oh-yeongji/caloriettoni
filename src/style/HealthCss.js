@@ -43,6 +43,12 @@ export const Total = styled.div`
   .ant-input[disabled] {
     margin-left: 61px;
   }
+
+  .ant-picker-dropdown .ant-picker-ranges > li {
+    position: relative;
+    left: -26px;
+  }
+
   .healthInfo {
     display: flex;
     flex-direction: column;
@@ -69,5 +75,9 @@ export const Total = styled.div`
     .total_e_kcal {
       display: flex;
     }
+  }
+
+  .css-eirlmw .ant-btn-primary {
+    background-color: #6495ed !important;
   }
 `;

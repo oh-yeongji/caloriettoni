@@ -170,7 +170,7 @@ const Diet = () => {
     const result = await postDietRecord(formData, dto);
 
     //작성을 다하고 제출하면 메인으로 이동해라.
-    // navigator("/main");
+    navigator("/main");
   };
 
   return (
@@ -220,7 +220,6 @@ const Diet = () => {
               onChange={handleChange}
             >
               {fileList.length >= 1 ? null : uploadButton}
-              
             </Upload>
           </Form.Item>
 
@@ -243,7 +242,7 @@ const Diet = () => {
             rules={[{ required: true, message: "하나를 선택해주세요!" }]}
             style={{
               padding: "20px",
-              background: " rgb(13,133,254)",
+              background: " #6495ED",
               borderRadius: " 35px 35px  6px 35px",
             }}
           >
@@ -284,7 +283,7 @@ const Diet = () => {
             rules={[{ required: true, message: "음식목록을 선택해주세요!" }]}
             style={{
               padding: "20px",
-              background: "rgb(13,133,254)",
+              background: "#6495ED",
               borderRadius: " 35px 35px 6px 35px",
             }}
           >
@@ -319,20 +318,16 @@ const Diet = () => {
           <Form.Item
             style={{
               padding: "20px",
+              marginLeft: "103px",
             }}
           >
             <Button type="primary" htmlType="submit" style={{ top: "-10px" }}>
               Save
             </Button>
-            <Button style={{ top: "-10px" }}>Cancel</Button>
+            <Button style={{ top: "-10px", marginLeft: "10px" }}>Cancel</Button>
           </Form.Item>
         </Form>
       </Total>
-      <div
-        style={{
-          background: "#fff5ee",
-        }}
-      ></div>
     </>
   );
 };
