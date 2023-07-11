@@ -21,7 +21,7 @@ const ScheduleItem = ({ item, scheduleText, setScheduleText }) => {
   };
   const handleSaveClick = () => {
     let newTextData = scheduleText.map(item => {
-      console.log(item);
+      // console.log(item);
       item.goal = editScheduleText;
       return item;
     });

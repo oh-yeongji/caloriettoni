@@ -41,7 +41,7 @@ export const patchScheduleTextData = async (iuser, editScheduleText) => {
       goal: editScheduleText,
     });
     const result = res.data;
-    console.log(result);
+    // console.log(result);
   } catch (error) {
     console.log(error);
   }
@@ -53,7 +53,7 @@ export const getScheduleList = async yearMonth => {
   try {
     const res = await axios.get(`/api/calender/1?yearMonth=${yearMonth}`);
     const result = res.data;
-    console.log(result);
+    // console.log(result);
     return result;
   } catch (err) {
     console.log(err);

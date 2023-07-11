@@ -19,7 +19,6 @@ export const CalendarMain = styled(Calendar)`
   width: 500px;
   height: 100%;
   border: none;
-  padding-bottom: 83.5px;
 
   .react-calendar__navigation {
     background: lightblue;
@@ -56,8 +55,8 @@ export const CalendarMain = styled(Calendar)`
   }
   .react-calendar__month-view__days {
     .react-calendar__tile {
-      padding: 37px 10px;
-      font-size: 23px;
+      padding: 45.4px 10px;
+      font-size: 30px;
     }
   }
   .react-calendar__navigation button:enabled:hover,
@@ -85,5 +84,9 @@ export const CalendarMain = styled(Calendar)`
   .react-calendar__tile {
     height: 10px;
     width: 10px;
+  }
+  .react-calendar__month-view__days {
+    height: 100%;
+    min-height: 712px;
   }
 `;
