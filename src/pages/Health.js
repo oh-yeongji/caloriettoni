@@ -22,29 +22,6 @@ import { Logo } from "../style/ListCss";
 import { useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 
-const date = new Date();
-const year = date.getFullYear();
-const month = String(date.getMonth() + 1).padStart(2, "0");
-const day = String(date.getDate()).padStart(2, "0");
-
-const formatDate = `${year}-${month}-${day}`;
-// 파일 미리보기
-const filePreview = file =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-
-const normFile = e => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
-const format = "HH:mm";
-
 const Health = () => {
   const navigator = useNavigate();
   // form 관련
@@ -56,33 +33,13 @@ const Health = () => {
   //소비 calorie
   const [minuscalorie, setMinusCalorie] = useState(null);
 
-  const getCateList = () => {
-    getHealthCate();
-  };
+  // 운동계산하기 관련 코드
+  const [exercise, setExercise] = useState(0);
+  const [ihelCate, setIhelcate] = useState(null);
+
   useEffect(() => {
     getCateList();
   }, []);
-
-  //운동카테고리목록 Get 기능
-  const exerciseCate = async () => {
-    try {
-      const res = await getHealthCate();
-      console.log(res);
-      const healthList = res.map(item => {
-        const data = {
-          label: item.helName,
-          value: item.helName,
-          h_kcal: item.hkcal,
-          ihelCate: item.ihelCate,
-        };
-        return data;
-      });
-      // console.log(healthList);
-      setHealthData(healthList);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   //화면에 뿌려주기
   useEffect(() => {
@@ -90,8 +47,6 @@ const Health = () => {
   }, []);
 
   // 운동계산하기 관련 코드
-  const [exercise, setExercise] = useState(0);
-  const [ihelCate, setIhelcate] = useState(null);
   const handleChangeHealth = value => {
     const exercise = healthData.find(item => item.value === value);
     setExercise(exercise);
@@ -199,6 +154,56 @@ const Health = () => {
     const result = await postHealthRecord(formData);
     navigator("/main");
   };
+
+  //운동카테고리목록 Get 기능
+  const exerciseCate = async () => {
+    try {
+      const res = await getHealthCate();
+      console.log(res);
+      const healthList = res.map(item => {
+        const data = {
+          label: item.helName,
+          value: item.helName,
+          h_kcal: item.hkcal,
+          ihelCate: item.ihelCate,
+        };
+        return data;
+      });
+      // console.log(healthList);
+      setHealthData(healthList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getCateList = () => {
+    getHealthCate();
+  };
+
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  const formatDate = `${year}-${month}-${day}`;
+
+  // 파일 미리보기
+  const filePreview = file =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+
+  const normFile = e => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+  const format = "HH:mm";
+
   return (
     <Total>
       <Logo>
@@ -360,27 +365,36 @@ const Health = () => {
         </Form.Item>
 
         {/* 저장/취소 버튼 */}
-        <Form.Item>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "7px",
+          }}
+        >
           <Button
             type="primary"
             htmlType="submit"
-            style={{
-              backgroundColor: "rgb(13,133,254)",
-              position: "relative",
-              left: "70px",
-            }}
+            style={
+              {
+                // backgroundColor: "rgb(13,133,254)",
+                // position: "relative",
+                // left: "70px",
+              }
+            }
           >
             Save
           </Button>
           <Button
             style={{
-              position: "relative",
-              left: "70px",
+              backgroundColor: "#fff",
+              // position: "relative",
+              // left: "70px",
             }}
           >
             Cancel
           </Button>
-        </Form.Item>
+        </div>
       </Form>
     </Total>
   );

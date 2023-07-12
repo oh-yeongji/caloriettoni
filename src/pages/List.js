@@ -95,7 +95,9 @@ const List = () => {
             </ListDietContain>
           ))
         ) : (
-          <span>해당 날짜에 기록이 없습니다.</span>
+          <span style={{ display: "block", textAlign: "center" }}>
+            해당 날짜에 기록이 없습니다.
+          </span>
         )}
       </ListDietWrap>
       <ListHealthWrap>
@@ -132,7 +134,9 @@ const List = () => {
             </ListHealthContain>
           ))
         ) : (
-          <span>해당 날짜에 기록이 없습니다.</span>
+          <span style={{ display: "block", textAlign: "center" }}>
+            해당 날짜에 기록이 없습니다.
+          </span>
         )}
       </ListHealthWrap>
     </ListWrap>

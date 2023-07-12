@@ -3,10 +3,11 @@ import styled from "@emotion/styled";
 export const ListWrap = styled.div`
   margin: 0 auto;
   border: 1px solid lightblue;
-  height: 100%;
-  min-height: 900px;
+
+  /* height: 100%; */
+  min-height: 100vh;
   background: #f0f8ff;
-  padding-bottom: 110px;
+  /* padding-bottom: 110px; */
   h3 {
     display: flex;
     justify-content: flex-end;
@@ -71,7 +72,7 @@ export const ListDietPic = styled.div`
 
 export const ListHealthWrap = styled.div`
   margin-bottom: 80px;
-  height: 400px;
+  /* height: 400px; */
 `;
 
 export const ListHealthContain = styled.div`

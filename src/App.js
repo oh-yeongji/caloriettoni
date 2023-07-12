@@ -4,7 +4,6 @@ import Intro from "./pages/Intro";
 import Main from "./pages/Main";
 import Diet from "./pages/Diet";
 import Health from "./pages/Health";
-import MyPage from "./pages/MyPage";
 import NotFound from "./pages/NotFound";
 import Schedule from "./pages/Schedule";
 import List from "./pages/List";
@@ -35,7 +34,6 @@ function App() {
         <Route path="/health" element={<Health />}></Route>
         <Route path="/schedule/" element={<Schedule />}></Route>
         <Route path="/list/:date" element={<List />}></Route>
-        <Route path="/mypage" element={<MyPage />}></Route>
         <Route path="/notfound" element={<NotFound />}></Route>
       </Routes>
       {!hideFooterOnIntro && <Footer />}

@@ -184,7 +184,7 @@ const Diet = () => {
         <Form
           labelAlign="left"
           labelCol={{
-            span: 5,
+            span: 9,
           }}
           wrapperCol={{
             span: 14,

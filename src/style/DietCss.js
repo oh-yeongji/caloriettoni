@@ -19,14 +19,9 @@ export const Total = styled.div`
     /* right: -57px; */
   }
 
-  :where(.css-dev-only-do-not-override-12upa3x).ant-form-item
-    .ant-form-item-control-input-content {
+  .ant-form-item .ant-form-item-control-input-content {
     position: relative;
-    left: 26px;
-  }
-
-  .css-dev-only-do-not-override-12upa3x {
-    /* margin-left: 27px; */
+    /* left: 26px; */
   }
 
   .ant-upload-wrapper.ant-upload-picture-card-wrapper
@@ -40,44 +35,40 @@ export const Total = styled.div`
   }
   .ant-form-item .ant-form-item-label {
     overflow: visible;
-    margin-left: 31px;
+    /* margin-left: 49px; */
     & > div {
       margin-left: 18px;
     }
   }
 
-  .css-dev-only-do-not-override-12upa3x .ant-radio-group {
+  .ant-radio-group {
     margin-left: 33px;
   }
 
-  .css-dev-only-do-not-override-12upa3x.ant-select-single:not(
-      .ant-select-customize-input
-    )
-    .ant-select-selector {
-    margin-left: 31px;
+  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+    /* margin-left: 86px; */
   }
 
   .ant-select .ant-select-arrow .anticon > svg {
-    position: relative;
-    left: 23px;
+    display: none;
   }
 
-  .css-dev-only-do-not-override-12upa3x.ant-input-disabled,
-  :where(.css-dev-only-do-not-override-12upa3x).ant-input[disabled] {
-    margin-left: 64px;
+  .ant-input-disabled,
+  .ant-input[disabled] {
+    /* margin-left: 124px; */
     background-color: #fff;
     width: 178px;
   }
 
-  .ant-form-item css-dev-only-do-not-override-12upa3x {
-    margin-left: 100px;
+  .ant-form-item {
+    /* margin-left: 100px; */
   }
 
   /* .ant-form-item .ant-form-item-label > label {
     margin-left: 18px;
   } */
 
-  textarea:where(.css-dev-only-do-not-override-12upa3x).ant-input {
+  textarea .ant-input {
     margin-left: 33px;
   }
 

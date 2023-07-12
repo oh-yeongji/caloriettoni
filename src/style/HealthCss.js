@@ -19,9 +19,6 @@ export const Total = styled.div`
     /* right: -57px; */
   }
 
-  .css-dev-only-do-not-override-12upa3x {
-    margin-left: 9px;
-  }
   .ant-upload-wrapper .ant-upload-list {
     margin-left: 32px;
   }
@@ -47,7 +44,7 @@ export const Total = styled.div`
     }
   }
   .ant-input[disabled] {
-    /* margin-left: 61px; */
+    margin-left: 24px;
   }
 
   .ant-picker-dropdown .ant-picker-ranges > li {

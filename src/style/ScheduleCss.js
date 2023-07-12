@@ -57,6 +57,7 @@ export const CalendarMain = styled(Calendar)`
     .react-calendar__tile {
       padding: 45.4px 10px;
       font-size: 30px;
+      line-height: 0px;
     }
   }
   .react-calendar__navigation button:enabled:hover,
@@ -73,6 +74,10 @@ export const CalendarMain = styled(Calendar)`
   .highlight {
     background: lightgreen;
   }
+  .react-calendar__tile {
+    padding: 30px 30px !important;
+    font-size: 20px !important;
+  }
   .react-calendar__tile--active {
     background: lightblue;
     color: white;
@@ -87,6 +92,6 @@ export const CalendarMain = styled(Calendar)`
   }
   .react-calendar__month-view__days {
     height: 100%;
-    min-height: 712px;
+    min-height: 500px;
   }
 `;
