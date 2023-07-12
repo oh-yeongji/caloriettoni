@@ -66,7 +66,7 @@ export const Mypage = styled.div`
 `;
 
 export const GraphTotal = styled.div`
-  background: rgb(13, 133, 254);
+  background: rgb(100, 149, 237);
   border-radius: 35px 35px 5px 35px;
   height: 300px;
   .graph {

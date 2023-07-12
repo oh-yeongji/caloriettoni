@@ -1,5 +1,7 @@
 .wrap {
+  position: relative;
   margin: 0 auto;
   width: 500px;
-  margin: 0 auto;
+  height: 100vh;
+  background: #fff;
 }

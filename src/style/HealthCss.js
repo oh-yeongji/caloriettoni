@@ -13,6 +13,12 @@ export const Total = styled.div`
   Form > div {
     margin-bottom: 20px;
   }
+
+  .ant-form-item .ant-form-item-control-input-content {
+    position: relative;
+    /* right: -57px; */
+  }
+
   .css-dev-only-do-not-override-12upa3x {
     margin-left: 9px;
   }
@@ -20,7 +26,7 @@ export const Total = styled.div`
     margin-left: 32px;
   }
   .ant-form-item .ant-form-item-control-input-content {
-    margin-left: 23px;
+    /* margin-left: 23px; */
   }
   .ant-upload-wrapper.ant-upload-picture-card-wrapper
     .ant-upload.ant-upload-select
@@ -30,7 +36,7 @@ export const Total = styled.div`
   }
 
   .ant-select-selector {
-    margin-left: 19px;
+    /* margin-left: 19px; */
   }
 
   .ant-form-item .ant-form-item-label {
@@ -41,7 +47,7 @@ export const Total = styled.div`
     }
   }
   .ant-input[disabled] {
-    margin-left: 61px;
+    /* margin-left: 61px; */
   }
 
   .ant-picker-dropdown .ant-picker-ranges > li {
@@ -76,8 +82,14 @@ export const Total = styled.div`
       display: flex;
     }
   }
-
+  /* 
   .css-eirlmw .ant-btn-primary {
     background-color: #6495ed !important;
+  } */
+
+  .ant-form-item-control-input-content {
+    button {
+      background-color: #6495ed;
+    }
   }
 `;

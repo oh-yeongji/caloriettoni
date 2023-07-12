@@ -182,8 +182,9 @@ const Diet = () => {
         <div className="formatDate">{formatDate}</div>
 
         <Form
+          labelAlign="left"
           labelCol={{
-            span: 4,
+            span: 5,
           }}
           wrapperCol={{
             span: 14,

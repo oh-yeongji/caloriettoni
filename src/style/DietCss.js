@@ -14,6 +14,17 @@ export const Total = styled.div`
     margin-bottom: 20px;
   }
 
+  .ant-form-item .ant-form-item-control-input-content {
+    position: relative;
+    /* right: -57px; */
+  }
+
+  :where(.css-dev-only-do-not-override-12upa3x).ant-form-item
+    .ant-form-item-control-input-content {
+    position: relative;
+    left: 26px;
+  }
+
   .css-dev-only-do-not-override-12upa3x {
     /* margin-left: 27px; */
   }

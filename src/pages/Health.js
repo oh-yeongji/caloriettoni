@@ -208,8 +208,9 @@ const Health = () => {
 
       <Form
         labelCol={{
-          span: 4,
+          span: 9,
         }}
+        labelAlign="left"
         wrapperCol={{
           span: 14,
         }}
