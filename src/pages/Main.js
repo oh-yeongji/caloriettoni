@@ -185,7 +185,7 @@ const Main = () => {
                 <p>{weight}</p>
               </div>
               <div>
-                <p> BMI:</p>
+                <p> BMR:</p>
                 <p>{bmi}</p>
               </div>
             </div>
