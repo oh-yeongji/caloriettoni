@@ -13,20 +13,60 @@ import moment from "moment";
 // 서버에서 가지고 오는 샘플 데이터
 
 const Main = () => {
+  //// useState 시작
   //mypage info
   const [name, setName] = useState("");
   const [gender, setGender] = useState("");
   const [age, setAge] = useState(null);
   const [height, setHeight] = useState(null);
   const [weight, setWeight] = useState(null);
-  const [bmi, setBmi] = useState(null);
+  const [bmr, setBmr] = useState(null);
   const [pic, setPic] = useState("");
 
   //chart Data
   const [chartData, setChartData] = useState([]);
+  // 주간저장 state
+  const [showPeriod, setShowPeriod] = useState("");
+  // 차트 출력 데이터 저장하기
+  const [stDay, setStDay] = useState(0);
+
   //하루 총 섭취/소비 데이터
   const [todayPlusData, setTodayPlusData] = useState(0);
   const [todayMinusData, setTodayMinusData] = useState(0);
+
+  //// useState 시작
+
+
+  ////useEffect 시작
+  //개인정보 화면 출력
+  useEffect(() => {
+    getMypageInfoLoad();
+  }, []);
+
+  //그래프 화면에 화면 출력
+  useEffect(() => {
+    getStartAndEndOfWeek(0);
+  }, []);
+
+  //총 소모/섭취 칼로리 화면 출력
+  useEffect(() => {
+    getTodayCalorieLoad();
+  }, []);
+
+  ////useEffect 끝
+
+  ////handler 함수 시작
+  const handleDate = () => {
+    getStartAndEndOfWeek(0);
+  };
+  const handleDatePrev = () => {
+    const day = stDay + 1;
+    getStartAndEndOfWeek(day);
+  };
+
+  ////handler 함수 끝
+
+  ////get 기능 시작
 
   //마이페이지 get정보
   const getMypageInfoLoad = async () => {
@@ -38,36 +78,14 @@ const Main = () => {
       setAge(res.age);
       setHeight(res.height);
       setWeight(res.weight);
-      setBmi(res.bmr);
+      setBmr(res.bmr);
       setPic(res.usepic);
     } catch (err) {
       console.log(err);
     }
   };
-  useEffect(() => {
-    getMypageInfoLoad();
-  }, []);
 
-  // 차트 출력 데이터 저장하기
-  const [stDay, setStDay] = useState(0);
-  const getStartAndEndOfWeek = _day => {
-    console.log(_day);
-    var today = new Date();
-    var day = today.getDay(); // 현재 요일 (0부터 일요일, 6까지 토요일)
-
-    // 이번 주의 시작 날짜
-    var startDate = new Date(today);
-    startDate.setDate(today.getDate() - day - 7 * _day);
-    // 이번 주의 마지막 날짜
-    var endDate = new Date(today);
-    endDate.setDate(today.getDate() + (day - (7 * _day - 4)));
-    getHealthGraphLoad(
-      moment(startDate).format("YYYY-MM-DD"),
-      moment(endDate).format("YYYY-MM-DD"),
-    );
-    setStDay(_day);
-  };
-
+  //graph get 기능
   const getHealthGraphLoad = async (_start, _end) => {
     try {
       const res = await getHealthGraph(_start, _end);
@@ -102,52 +120,50 @@ const Main = () => {
     }
   };
 
-  //화면에 뿌리기
-  useEffect(() => {
-    getStartAndEndOfWeek(0);
-  }, []);
-
-  //오늘 소모,섭취 칼로리
-  const getTodayMinusCalorieLoad = async () => {
+  //오늘 소모,섭취 칼로리 get 기능
+  const getTodayCalorieLoad = async () => {
     try {
       const res = await getTodayMinusCalorie();
       console.log(res);
 
       setTodayPlusData(res.eatKcal);
       setTodayMinusData(res.helkcal);
-
-      // console.log(TodayMinusData);
-      // console.log(TodayPlusData);
     } catch (err) {
       console.log(err);
     }
   };
 
-  //서버에서 자료가져올때 자료받아올 자리
-  useEffect(() => {
-    getTodayMinusCalorieLoad();
-  }, []);
+  ////get 기능 끝
 
-  // 주간 및 연간 저장 state
-  const [showPeriod, setShowPeriod] = useState("");
 
-  const handleDate = () => {
-    getStartAndEndOfWeek(0);
+
+  
+  // 차트 출력 데이터 저장하기
+  const getStartAndEndOfWeek = _day => {
+    console.log(_day);
+    var today = new Date();
+    var day = today.getDay(); // 현재 요일 (0부터 일요일, 6까지 토요일)
+
+    // 이번 주의 시작 날짜
+    var startDate = new Date(today);
+    startDate.setDate(today.getDate() - day - 7 * _day);
+    // 이번 주의 마지막 날짜
+    var endDate = new Date(today);
+    endDate.setDate(today.getDate() + (day - (7 * _day - 4)));
+    getHealthGraphLoad(
+      moment(startDate).format("YYYY-MM-DD"),
+      moment(endDate).format("YYYY-MM-DD"),
+    );
+    setStDay(_day);
   };
-  const handleDatePrev = () => {
-    const day = stDay + 1;
-    getStartAndEndOfWeek(day);
-  };
 
-  // 버튼의 크기 default:middle
-  // const [size, setSize] = useState("large");
+  //날짜 출력
   const date = new Date();
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
-
   const formatDate = `${year}-${month}-${day}`;
-  // console.log(pic);
+
   return (
     <Total>
       <Logo>
@@ -186,7 +202,7 @@ const Main = () => {
               </div>
               <div>
                 <p> BMR:</p>
-                <p>{bmi}</p>
+                <p>{bmr}</p>
               </div>
             </div>
           </div>
@@ -285,7 +301,6 @@ const Main = () => {
           >
             <FontAwesomeIcon icon={faChevronLeft} />
             지난주
-            {/* <FontAwesomeIcon icon={faChevronLeft} onClick={hi} /> <h2>{week==="주간"?주간을 보여주고:아니면 연간을 보여줘라}주간</h2> */}
           </div>
           <p>{showPeriod}</p>
           <div

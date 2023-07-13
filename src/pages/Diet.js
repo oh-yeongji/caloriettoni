@@ -4,44 +4,92 @@ import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload, Radio, Select, Input, Button, Form } from "antd";
 const { TextArea } = Input;
 import { Logo } from "../style/ListCss";
-import {
-  getDietCalorie,
-  postDietRecord,
-  postDietRecordIuser,
-} from "../api/writefetch";
+import { getDietCalorie, postDietRecord } from "../api/writefetch";
 import { useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 
-//사진 파일 선택
-const normFile = e => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
-
-//사진 파일 미리보기
-const filePreview = file =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
-
 const Diet = () => {
-  const navigator = useNavigate();
+  //사진 파일 선택
+  const normFile = e => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
 
-  const [form] = Form.useForm();
+  //사진 파일 미리보기
+  const filePreview = file =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = error => reject(error);
+    });
+
+  //// useState 시작
+  // 업로드할 이미지 목록 관리
+  const [fileList, setFileList] = useState([]);
+  // Modal 창 활성화 여부
+  const [previewOpen, setPreviewOpen] = useState(false);
+  // Modal 창에 보여줄 파일명
+  const [previewTitle, setPreviewTitle] = useState("");
+  // 선택된 이미지 미리보기
+  const [previewImage, setPreviewImage] = useState("");
   // 식사시각 state
   const [foodOption, setFoodOption] = useState(null);
   //식사 종류 state
   const [foodData, setFoodData] = useState([]);
   //식사 calorie
   const [intakeCalorie, setIntakeCalorie] = useState(null);
+  // 모달창 닫기
+  const handleCancel = () => setPreviewOpen(false);
 
-  // 기본 카테고리 정보 axios 호출 결과 반영
-  //load할때 시간걸리니까 async로 잡아줌
+  //form 관련
+  const [form] = Form.useForm();
+
+
+  ////useEffect 시작
+  useEffect(() => {
+    getDietCalorieLoad();
+  }, []);
+
+  ////useEffect 끝
+
+  ////handler 함수 시작
+
+  // upload 컴포넌트에서 처리
+  const handlePreview = async file => {
+    if (!file.url && !file.preview) {
+      file.preview = await filePreview(file.originFileObj);
+    }
+
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
+    );
+  };
+
+  // upload 컴포넌트에서 처리
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
+  // 목록이 바뀌면 실행되는 함수.
+  const handleChangeFood = value => {
+    //value와 value 같은걸 찾아서 food에 담아라.
+    const food = foodData.find(item => item.value === value);
+
+    console.log("나는 푸드입니당", food);
+    const f_kcal = food.f_kcal;
+
+    setIntakeCalorie(f_kcal);
+    // Form 컴포넌트의 initialValues를 f_kcal로 업데이트
+    form.setFieldsValue({ intakeCalorie: f_kcal });
+  };
+
+  ////handler 함수 끝
+  
+  ////get기능 시작
+  //calorie get 기능
   const getDietCalorieLoad = async () => {
     try {
       //getDietCalorie받아올때 await로 기다려
@@ -62,60 +110,13 @@ const Diet = () => {
         return data;
       });
 
-      // console.log(calorieList);
       // calorieList를 안담아주면 카테고리가 안뜸.
       setFoodData(calorieList);
     } catch (err) {
       console.log(err);
     }
   };
-
-  //마운트될때 한번만 load를 보여준다.
-  //서버에서 자료가져올때 자료받아올자리.
-  useEffect(() => {
-    getDietCalorieLoad();
-  }, []);
-
-  // 목록이 바뀌면 실행되는 함수.
-  const handleChangeFood = value => {
-    //value와 value 같은걸 찾아서 food에 담아라.
-    const food = foodData.find(item => item.value === value);
-
-    console.log("나는 푸드입니당", food);
-    const f_kcal = food.f_kcal;
-
-    setIntakeCalorie(f_kcal);
-    // Form 컴포넌트의 initialValues를 f_kcal로 업데이트
-    form.setFieldsValue({ intakeCalorie: f_kcal });
-  };
-
-  // Modal 창 활성화 여부
-  const [previewOpen, setPreviewOpen] = useState(false);
-  // Modal 창에 보여줄 파일명
-  const [previewTitle, setPreviewTitle] = useState("");
-  // 선택된 이미지 미리보기
-  const [previewImage, setPreviewImage] = useState("");
-  // 모달창 닫기
-  const handleCancel = () => setPreviewOpen(false);
-
-  // 업로드할 이미지 목록 관리
-  const [fileList, setFileList] = useState([]);
-
-  // upload 컴포넌트에서 처리
-  const handlePreview = async file => {
-    if (!file.url && !file.preview) {
-      file.preview = await filePreview(file.originFileObj);
-    }
-
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
-    );
-  };
-
-  // upload 컴포넌트에서 처리
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  ////get기능 끝
 
   // 업로드 버튼
   const uploadButton = (
@@ -137,23 +138,14 @@ const Diet = () => {
 
   const formatDate = `${year}-${month}-${day}`;
 
+  //post 시 기능
   const onFinish = async values => {
-    // console.log("Success:", values);
-    // 일반 글자 전송
-    // const result = await postDietRecord(
-    //   values.foodselect,
-    //   values.intakeCalorie,
-    //   parseInt(values.mealtime),
-    //   values.intakememo,
-    // );
-
     const dto = {
       iuser: 1,
       recDate: moment(Date.now()).format("YYYY-MM-DD"),
       ifood: values.foodselect,
       uefTime: parseInt(values.mealtime),
       ctnt: values.intakememo,
-      // ical: values.intakeCalorie,
     };
     console.log("dto : ", dto);
 
@@ -168,6 +160,9 @@ const Diet = () => {
       }),
     );
     const result = await postDietRecord(formData, dto);
+
+    //작성완료 관련
+    const navigator = useNavigate();
 
     //작성을 다하고 제출하면 메인으로 이동해라.
     navigator("/main");

@@ -23,7 +23,13 @@ import { useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 
 const Health = () => {
-  const navigator = useNavigate();
+  // Modal 창 활성화 여부
+  const [previewOpen, setPreviewOpen] = useState(false);
+  // Modal 창에 보여줄 파일명
+  const [previewTitle, setPreviewTitle] = useState("");
+  // 선택된 이미지 미리보기
+  const [previewImage, setPreviewImage] = useState("");
+
   // form 관련
   const [form] = Form.useForm();
   //운동 목록
@@ -33,19 +39,34 @@ const Health = () => {
   //소비 calorie
   const [minuscalorie, setMinusCalorie] = useState(null);
 
+  //운동시간
+  const [healthHour, setHealthHour] = useState(0);
   // 운동계산하기 관련 코드
   const [exercise, setExercise] = useState(0);
   const [ihelCate, setIhelcate] = useState(null);
 
+  //헬스 분당칼로리 GET기능 계산하기누를때
+  const [execName, setExecName] = useState("");
+  const [execKal, setExecKal] = useState(0);
+  const [execTime, setExecTime] = useState("");
+  const [execTotal, setExecTotal] = useState(0);
+
+  ////useEffect 시작
   useEffect(() => {
     getCateList();
   }, []);
 
   //화면에 뿌려주기
   useEffect(() => {
-    exerciseCate();
+    getHealthCateLoad();
   }, []);
 
+  ////useEffect 끝
+
+  ////handler 함수 시작
+
+  // 모달창 닫기
+  const handleCancel = () => setPreviewOpen(false);
   // 운동계산하기 관련 코드
   const handleChangeHealth = value => {
     const exercise = healthData.find(item => item.value === value);
@@ -59,8 +80,7 @@ const Health = () => {
     // console.log(exercise);
   };
 
-  const [healthHour, setHealthHour] = useState(0);
-  const handleChangTime = (time, timeString) => {
+  const handleChangeTime = (time, timeString) => {
     const selectedTime = time ? time.format("HH:mm") : "";
     const hour = time ? time.hour() : "";
     const minutes = time ? time.minute() : "";
@@ -72,65 +92,6 @@ const Health = () => {
     getHealthCalculateLoad(exercise.ihelCate, healthHour);
   };
 
-  //헬스 분당칼로리 GET기능 계산하기누를때
-  const [execName, setExecName] = useState("");
-  const [execKal, setExecKal] = useState(0);
-  const [execTime, setExecTime] = useState("");
-  const [execTotal, setExecTotal] = useState(0);
-
-  const getHealthCalculateLoad = async (helName, time) => {
-    try {
-      const res = await getHealthCalculate(helName, time);
-      // console.log("칼로리 계산 받아온 데이터 : ", res);
-      setExecName(res.helName);
-      setExecKal(res.hkcal);
-      setExecTime(res.time);
-      setExecTotal(res.totalHelKcal);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  // END ========================== 운동계산하기
-
-  // Modal 창 활성화 여부
-  const [previewOpen, setPreviewOpen] = useState(false);
-  // Modal 창에 보여줄 파일명
-  const [previewTitle, setPreviewTitle] = useState("");
-  // 선택된 이미지 미리보기
-  const [previewImage, setPreviewImage] = useState("");
-  // 모달창 닫기
-  const handleCancel = () => setPreviewOpen(false);
-
-  // 업로드할 이미지 목록 관리
-  const [fileList, setFileList] = useState([]);
-
-  // upload 컴포넌트에서 처리
-  const handlePreview = async file => {
-    if (!file.url && !file.preview) {
-      file.preview = await filePreview(file.originFileObj);
-    }
-    setPreviewImage(file.url || file.preview);
-    setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
-    );
-  };
-  // upload 컴포넌트에서 처리
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
-
-  // 업로드 버튼
-  const uploadButton = (
-    <div>
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
   const onFinish = async values => {
     // console.log("success", values);
     const dto = {
@@ -154,9 +115,46 @@ const Health = () => {
     const result = await postHealthRecord(formData);
     navigator("/main");
   };
+  ////handler 함수 끝
+
+  // upload 컴포넌트에서 처리
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+
+  // 업로드할 이미지 목록 관리
+  const [fileList, setFileList] = useState([]);
+
+  // upload 컴포넌트에서 처리
+  const handlePreview = async file => {
+    if (!file.url && !file.preview) {
+      file.preview = await filePreview(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
+    );
+  };
+
+  const navigator = useNavigate();
+
+  // 업로드 버튼
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
+
+  ////get 기능 시작
 
   //운동카테고리목록 Get 기능
-  const exerciseCate = async () => {
+  const getHealthCateLoad = async () => {
     try {
       const res = await getHealthCate();
       console.log(res);
@@ -179,6 +177,22 @@ const Health = () => {
   const getCateList = () => {
     getHealthCate();
   };
+
+  //운동 계산하기 get기능
+  const getHealthCalculateLoad = async (helName, time) => {
+    try {
+      const res = await getHealthCalculate(helName, time);
+      // console.log("칼로리 계산 받아온 데이터 : ", res);
+      setExecName(res.helName);
+      setExecKal(res.hkcal);
+      setExecTime(res.time);
+      setExecTotal(res.totalHelKcal);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  ////get 기능 끝
 
   const date = new Date();
   const year = date.getFullYear();
@@ -322,7 +336,7 @@ const Health = () => {
             // defaultValue={dayjs("00:00", format)}
             format={format}
             showNow={false}
-            onChange={handleChangTime}
+            onChange={handleChangeTime}
           />
         </Form.Item>
         <div className="healthInfo">
