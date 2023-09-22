@@ -2,6 +2,9 @@
 
 ## 프로젝트 설명: 식단과 운동의 종류를 기록하면 DB에서 가져와서 자동으로 칼로리를 표시, bmr과 직관적인 수치를 알려주는 웹.
 
+## 시연영상 
+
+[![Video Label](http://img.youtube.com/vi/XF45w1zoDZ0/0.jpg)](https://youtu.be/XF45w1zoDZ0)
 # 팀구성 인원 및 역할
 
 - Frontend
