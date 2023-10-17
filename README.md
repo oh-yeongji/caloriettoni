@@ -2,9 +2,14 @@
 
 ## 프로젝트 설명: 식단과 운동의 종류를 기록하면 DB에서 가져와서 자동으로 칼로리를 표시, bmr과 직관적인 수치를 알려주는 웹.
 
-## 시연영상 
+## 시연영상 [ 클릭시 유튜브로 이동 ]
 
 [![Video Label](http://img.youtube.com/vi/XF45w1zoDZ0/0.jpg)](https://youtu.be/XF45w1zoDZ0)
+
+<a target="_blank" href="https://www.notion.so/Caloriettoni-fce8b9d30824476c9c3ba6fd9c3762f2" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/notion.svg" />  Notion</a>
+    
+<a target="_blank" href="https://www.canva.com/design/DAFoM1L8prQ/VNYqpZiXMZhPLeCvH3V-Ug/view?utm_content=DAFoM1L8prQ&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/canva.svg" />  1차 프로젝트 발표 자료</a>
+
 # 팀구성 인원 및 역할
 
 - Frontend
